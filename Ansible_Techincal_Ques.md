@@ -73,4 +73,20 @@
 52. How do you structure Ansible for dev, QA, and prod?
 53. How do you install software only on specific hosts?
 54. How do you restart a service only when config changes?
-55. How do you prevent secrets from
+55. How do you prevent secrets from appearing in logs?
+56. Dynamic inventory is not fetching hosts. How do you debug it?
+57. Playbook fails on one host but succeeds on others. What do you do?
+58. How do you deploy updates without downtime?
+59. How do you fix and prevent configuration drift?
+
+## 🔹 Advanced Ansible Questions
+60. What is the difference between include_tasks and import_tasks?
+61. What are Ansible callback plugins?
+62. How does Ansible scale to thousands of nodes?
+63. What is Ansible Tower / AWX?
+64. How is RBAC implemented in Ansible Tower/AWX?
+65. How do you test Ansible roles?
+66. What is Molecule?
+67. How do you manage Windows hosts in Ansible?
+68. How do you debug complex Ansible playbooks?
+69. How do you integrate Ansible with Terraform?
