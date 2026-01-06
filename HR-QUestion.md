@@ -125,3 +125,14 @@ Overall, my experience combines infrastructure automation, CI/CD pipeline manage
 ---
 
 ✅ **This file is fully resume-aligned, HR-safe, and interview-ready**
+
+“Initially, while validating the monitoring setup, we deployed Prometheus manually.
+During this, we identified that Prometheus is a stateful application because it stores metrics data, so it runs as a StatefulSet and requires persistent storage.
+
+Even though I configured a PVC, the Prometheus pod went into CrashLoopBackOff, and the PVC remained in Pending state. This happened because there was no StorageClass, the EBS CSI driver was not installed, and Kubernetes did not have permissions to provision EBS volumes.
+
+To fix this, I created a StorageClass, installed the AWS EBS CSI driver, and configured IRSA so the CSI driver could securely create EBS volumes. After this, PVCs were dynamically provisioned and Prometheus started successfully.
+
+Later, to improve scalability and reduce manual configuration, we migrated to the Prometheus Operator stack. With the Operator, Prometheus is managed as a custom resource, and metrics are automatically discovered using ServiceMonitor and PodMonitor, without manual scrape configuration.
+
+This approach made monitoring more stable, automated, and production-ready.”
