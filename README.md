@@ -82,17 +82,34 @@ Finally, I confirm that the pod and node are in the same Availability Zone as th
 
 # How do you troubleshoot an application that is running, but not accessible from the browser?
 
-If it is a monolithic setup on a VM, I first check application and system logs using tools like journalctl -f or application logs to confirm the service is running and listening on the expected port.
+    If it is a monolithic setup on a VM, I first check application and system logs using tools like journalctl -f or application logs to confirm     the service is running and listening on the expected port.
+    
+    In a microservices or Kubernetes setup, I follow a layered approach.
+    First, I check whether the pods are running. If not, 
+    I describe the pod and check logs to identify issues like crashes or configuration errors.
+    
+    Next, I verify the Service and ensure the endpoints are correctly mapped to the pods using labels.
+    
+    Then, I check whether the Ingress controller is running and validate the Ingress rules, paths, and TLS configuration.
+    
+    After that, I verify DNS mapping at the domain provider level and ensure traffic is pointing to the correct LoadBalancer.
+    Finally, I check security groups and network rules to confirm the required ports are open.
 
-In a microservices or Kubernetes setup, I follow a layered approach.
-First, I check whether the pods are running. If not, I describe the pod and check logs to identify issues like crashes or configuration errors.
+# A Kubernetes Service exists, but traffic is not reaching the pods. How do you troubleshoot it?”
 
-Next, I verify the Service and ensure the endpoints are correctly mapped to the pods using labels.
-
-Then, I check whether the Ingress controller is running and validate the Ingress rules, paths, and TLS configuration.
-
-After that, I verify DNS mapping at the domain provider level and ensure traffic is pointing to the correct LoadBalancer.
-Finally, I check security groups and network rules to confirm the required ports are open.
+    If a Kubernetes Service exists but traffic is not reaching the pods, I troubleshoot step by step.
+    
+    First, I check whether the pods are running and ready.
+    Then I verify that the Service selector matches the pod labels, because mismatched labels will result in no endpoints.
+    
+    Next, I check the Service endpoints to confirm pods are registered.
+    If endpoints are missing, it means the Service is not routing traffic to any pod.
+    
+    After that, I verify the Service type and port mappings (targetPort vs containerPort).
+    
+    Then I check whether the Ingress controller is running and validate the Ingress rules and paths.
+    
+    Finally, I verify DNS resolution and security group rules to ensure traffic is allowed to reach the cluster.”
 
 
 
