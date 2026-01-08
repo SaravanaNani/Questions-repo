@@ -111,5 +111,52 @@ Common causes I check are:
     
     Finally, I verify DNS resolution and security group rules to ensure traffic is allowed to reach the cluster.”
 
+# How do you deploy a new version of an application in Kubernetes without downtime?
 
+    “To deploy a new version without downtime, I use Kubernetes rolling updates.
+    
+    In our setup, Jenkins builds a new Docker image and pushes it to the registry.
+    Jenkins then updates the image tag in the Kubernetes manifest or Helm values file and applies it using kubectl or Helm.
+    
+    Kubernetes creates new pods gradually while keeping old pods running until the new pods become ready.
+    Traffic is shifted automatically through the Service, ensuring zero downtime.
+    
+    If any issue occurs, I rollback using kubectl rollout undo deployment <name>.”
+   
+    Old pods → still serving traffic
+    New pods → start with the new image
+    Once new pods are Ready, old pods are removed
+    Users don’t see downtime
+    
+    We control this behavior using rolling update settings like maxUnavailable and maxSurge.
 
+    strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+
+    ⭐ Bonus line (very good impression)
+    
+    “Readiness probes ensure traffic is sent only to healthy pods during rollout.”
+
+# Pods are stuck in Pending state. What are the possible reasons and how do you debug it? 
+    
+       “If pods are stuck in Pending state, I first describe the pod to check scheduler events.
+    I verify node resource availability like CPU and memory.
+    I then check for node taints, tolerations, and node affinity rules that may prevent scheduling.
+    I also verify PVC status, storage availability, and image-related issues if required.”
+
+# ConfigMap was updated but the application didn’t reflect the changes. Why, and how do you fix it? 
+    
+    “If ConfigMap is mounted as a file, Kubernetes updates the file, but most applications still require a restart to re-read the configuration.”
+    ConfigMap changes do not reflect automatically because pods do not reload configuration at runtime.
+    To apply the changes, I restart the pod or roll the deployment so the new ConfigMap values are loaded when the container starts.”
+# How do you manage secrets securely in Kubernetes?
+
+    “We manage secrets securely using Kubernetes Secrets or external secret managers like AWS Secrets Manager or HashiCorp Vault.
+    Secrets are never hardcoded in code or Git. They are mounted into pods as environment variables or files, and access is controlled using RBAC and IAM roles like IRSA.”
+
+# “A Kubernetes node goes down. What happens to the pods running on that node?”
+    “When a Kubernetes node goes down, the control plane marks the node as NotReady.
+    The pods running on that node are terminated, and Kubernetes automatically reschedules them on healthy nodes to maintain the desired state,      as long as they are managed by a controller like a Deployment or ReplicaSet.”
