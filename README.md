@@ -52,12 +52,23 @@ Finally, I review networking components like security groups, node networking, a
 
 # A Pod is stuck in CrashLoopBackOff. How do you troubleshoot it?
 
-First, I describe the pod to check events and understand why it is restarting.
-Then I check the pod logs to identify application or startup errors.
+When a pod goes into CrashLoopBackOff, I first describe the pod and check events to see why it is restarting. Then I check the container logs to identify application startup or configuration issues.
 
-Common causes I look for are missing or pending PVCs, port conflicts, incorrect ConfigMap or Secret values, misconfigured liveness or readiness probes, image issues like wrong tags or corrupted images, and insufficient CPU or memory.
+Common causes I check are:
 
-Once the root cause is identified, I fix the configuration and redeploy the pod.
+Application startup failures – wrong command, missing dependency, or app crashing on boot.
+
+Probe issues – misconfigured liveness or readiness probes causing repeated restarts.
+
+Port conflicts – hostPort already in use, so I change the port or avoid hostPort.
+
+Configuration or Secret mismatch – missing or incorrect keys in ConfigMaps or Secrets.
+
+PVC issues – volume not mounted or PVC stuck in Pending state.
+
+Resource limits – container hitting memory limits and getting OOMKilled.
+
+After identifying the root cause, I fix the configuration or resource issue and redeploy the pod.”
 
 # A PVC is stuck in Pending state in EKS. How do you troubleshoot and fix it?
 
