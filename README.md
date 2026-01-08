@@ -13,3 +13,12 @@ Overall, my experience includes infrastructure automation, CI/CD, Kubernetes mon
 “One major issue we faced in production was Prometheus pods going into PVC Pending state. Prometheus is stateful and requires persistent storage, but dynamic volume provisioning was not configured in the EKS cluster. After identifying the root cause, we created a StorageClass, installed the AWS EBS CSI Driver, and configured IRSA so the CSI driver could securely provision EBS volumes. Once this was done, PVCs were created automatically and Prometheus became stable.
 
 Another issue we faced was a Jenkins server crash. We recovered the server by creating a new EC2 instance from the latest snapshot and restoring the Jenkins configuration directory. After recovery, we reconfigured access securely by recreating users, restricting network access using security groups, and ensuring only authorized IPs could access Jenkins. This helped us bring the CI/CD system back online with minimal downtime.”
+
+# How do you ensure security in your AWS and DevOps environment?
+
+“We secure our infrastructure by following the principle of least privilege, where each AWS service and user has only the required IAM permissions. We restrict network access using security groups with minimal inbound rules and place application servers in private subnets.
+
+We scan Docker images for vulnerabilities before deployment and use Docker-based pipelines to maintain consistent build and deployment environments. Sensitive data like passwords and tokens are stored securely using Jenkins credentials or Vault instead of hardcoding them.
+
+Additionally, we enable logging and monitoring using CloudWatch and alerts to quickly detect any suspicious activity.”
+
