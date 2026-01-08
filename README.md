@@ -22,3 +22,11 @@ We scan Docker images for vulnerabilities before deployment and use Docker-based
 
 Additionally, we enable logging and monitoring using CloudWatch and alerts to quickly detect any suspicious activity.”
 
+# Explain a simple CI/CD pipeline you have worked on end to end.
+
+“I worked on a scripted Jenkins CI/CD pipeline for Java application deployment. The pipeline starts with code checkout from Git, followed by SonarQube analysis for code quality checks.
+
+Next, the application is built using Maven, and the artifact version is updated in the pom.xml using the Jenkins build number. After a manual approval, the artifact is uploaded to Nexus.
+
+For deployment, the same artifact is pulled from Nexus to ensure build-once and deploy-many. After deployment, we run validation checks to confirm the application is up and accessible. Finally, email notifications are sent to inform the team about the pipeline status.”
+
