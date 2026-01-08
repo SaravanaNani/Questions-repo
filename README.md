@@ -16,69 +16,69 @@ Another issue we faced was a Jenkins server crash. We recovered the server by cr
 
 # How do you ensure security in your AWS and DevOps environment?
 
-“We secure our infrastructure by following the principle of least privilege, where each AWS service and user has only the required IAM permissions. We restrict network access using security groups with minimal inbound rules and place application servers in private subnets.
-
-We scan Docker images for vulnerabilities before deployment and use Docker-based pipelines to maintain consistent build and deployment environments. Sensitive data like passwords and tokens are stored securely using Jenkins credentials or Vault instead of hardcoding them.
-
-Additionally, we enable logging and monitoring using CloudWatch and alerts to quickly detect any suspicious activity.”
+    We secure our infrastructure by following the principle of least privilege, 
+    where each AWS service and user has only the required IAM permissions. 
+    We restrict network access using security groups with minimal inbound rules and place application servers in private subnets.
+    
+    We scan Docker images for vulnerabilities before deployment and use Docker-based pipelines to maintain consistent build and deployment           environments. 
+    Sensitive data like passwords and tokens are stored securely using Jenkins credentials or Vault instead of hardcoding them.
+    
+    Additionally, we enable logging and monitoring using CloudWatch and alerts to quickly detect any suspicious activity.
 
 # Explain a simple CI/CD pipeline you have worked on end to end.
 
-“I worked on a scripted Jenkins CI/CD pipeline for Java application deployment. The pipeline starts with code checkout from Git, followed by SonarQube analysis for code quality checks.
-
-Next, the application is built using Maven, and the artifact version is updated in the pom.xml using the Jenkins build number. After a manual approval, the artifact is uploaded to Nexus.
-
-For deployment, the same artifact is pulled from Nexus to ensure build-once and deploy-many. After deployment, we run validation checks to confirm the application is up and accessible. Finally, email notifications are sent to inform the team about the pipeline status.”
+    “I worked on a scripted Jenkins CI/CD pipeline for Java application deployment. 
+    The pipeline starts with code checkout from Git, followed by SonarQube analysis for code quality checks.
+    
+    Next, the application is built using Maven, and the artifact version is updated in the pom.xml using the Jenkins build number. 
+    After a manual approval, the artifact is uploaded to Nexus.
+    
+    For deployment, the same artifact is pulled from Nexus to ensure build-once and deploy-many.
+    After deployment, we run validation checks to confirm the application is up and accessible.
+    Finally, email notifications are sent to inform the team about the pipeline status.”
 
 # How do you monitor applications and infrastructure in your projects?
 
-In my first project, we used AWS CloudWatch to monitor EC2 instances, application logs, and system metrics like CPU, memory, and disk usage. We configured CloudWatch alarms to notify the team when thresholds were breached.
-
-In my second project on EKS, we implemented centralized monitoring. We used Prometheus to scrape metrics from Kubernetes workloads, Promtail to collect application logs, and Loki as a centralized log store. Grafana was used to visualize metrics and query logs.
-
-We also configured alerts in Grafana so issues like pod crashes or high resource usage could be detected early and resolved quickly.”
+    In my first project, we used AWS CloudWatch to monitor EC2 instances, application logs, and system metrics like CPU, memory, and disk usage.     We configured CloudWatch alarms to notify the team when thresholds were breached.
+    
+    In my second project on EKS, we implemented centralized monitoring. We used Prometheus to scrape metrics from Kubernetes workloads, Promtail      to collect application logs, and Loki as a centralized log store. Grafana was used to visualize metrics and query logs.
+    
+    We also configured alerts in Grafana so issues like pod crashes or high resource usage could be detected early and resolved quickly.”
 
 # What happens when an application deployed on Kubernetes is not accessible, and how do you troubleshoot it?
 
-“First, I check the pod and deployment status to ensure the application is running. I verify pod logs and events using kubectl logs and kubectl describe pod.
-
-Next, I check the Service to confirm endpoints are created and correctly mapped to the pods.
-
-Then I verify the Ingress controller is running and validate the Ingress configuration, including paths, host rules, and TLS settings.
-
-After that, I check DNS routing, such as CNAME records in the domain provider, to ensure traffic is pointing to the load balancer.
-
-Finally, I review networking components like security groups, node networking, and cluster-level networking if the issue persists.”
+    “First, I check the pod and deployment status to ensure the application is running. 
+    I verify pod logs and events using kubectl logs and kubectl describe pod.
+    
+    Next, I check the Service to confirm endpoints are created and correctly mapped to the pods.
+    Then I verify the Ingress controller is running and validate the Ingress configuration, including paths, host rules, and TLS settings.
+    After that, I check DNS routing, such as CNAME records in the domain provider, to ensure traffic is pointing to the load balancer.
+    Finally, I review networking components like security groups, node networking, and cluster-level networking if the issue persists.”
 
 # A Pod is stuck in CrashLoopBackOff. How do you troubleshoot it?
 
-When a pod goes into CrashLoopBackOff, I first describe the pod and check events to see why it is restarting. Then I check the container logs to identify application startup or configuration issues.
+When a pod goes into CrashLoopBackOff, I first describe the pod and check events to see why it is restarting. 
+Then I check the container logs to identify application startup or configuration issues.
 
 Common causes I check are:
-
-Application startup failures – wrong command, missing dependency, or app crashing on boot.
-
-Probe issues – misconfigured liveness or readiness probes causing repeated restarts.
-
-Port conflicts – hostPort already in use, so I change the port or avoid hostPort.
-
-Configuration or Secret mismatch – missing or incorrect keys in ConfigMaps or Secrets.
-
-PVC issues – volume not mounted or PVC stuck in Pending state.
-
-Resource limits – container hitting memory limits and getting OOMKilled.
-
-After identifying the root cause, I fix the configuration or resource issue and redeploy the pod.”
+    
+    Application startup failures – wrong command, missing dependency, or app crashing on boot.    
+    Probe issues – misconfigured liveness or readiness probes causing repeated restarts.
+    Port conflicts – hostPort already in use, so I change the port or avoid hostPort.
+    Configuration or Secret mismatch – missing or incorrect keys in ConfigMaps or Secrets.
+    PVC issues – volume not mounted or PVC stuck in Pending state.
+    Resource limits – container hitting memory limits and getting OOMKilled.
+    After identifying the root cause, I fix the configuration or resource issue and redeploy the pod.”
 
 # A PVC is stuck in Pending state in EKS. How do you troubleshoot and fix it?
 
-“First, I check the PVC events to understand why it is in Pending state.
-Then I verify whether a StorageClass exists and whether it is set as default or referenced correctly in the PVC.
-
-Next, I check if the AWS EBS CSI Driver is installed and running in the cluster.
-I also verify IRSA permissions to ensure the CSI driver has access to create EBS volumes.
-
-Finally, I confirm that the pod and node are in the same Availability Zone as the EBS volume, because EBS volumes are AZ-specific.”
+    “First, I check the PVC events to understand why it is in Pending state.
+    Then I verify whether a StorageClass exists and whether it is set as default or referenced correctly in the PVC.
+    
+    Next, I check if the AWS EBS CSI Driver is installed and running in the cluster.
+    I also verify IRSA permissions to ensure the CSI driver has access to create EBS volumes.
+    
+    Finally, I confirm that the pod and node are in the same Availability Zone as the EBS volume, because EBS volumes are AZ-specific.”
 
 # How do you troubleshoot an application that is running, but not accessible from the browser?
 
