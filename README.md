@@ -1,4 +1,13 @@
 # Questions-repo
+    Hi, my name is Saravana. I have around 2 years of experience as a DevOps Engineer.
+    I’ve worked mainly on AWS, Terraform, Jenkins, Docker, Ansible, and Kubernetes.
+    
+    In my first project, I automated AWS infrastructure using Terraform and supported CI/CD pipelines for Java applications using Jenkins,           Maven, and Docker.
+    
+    In my second project, I supported an AWS EKS platform where I worked on ingress, TLS, monitoring using Prometheus and Grafana, and               troubleshooting pod and storage issues.
+
+I enjoy working on automation, monitoring, and production support, and I’m now looking for a role where I can grow further in cloud and DevOps technologies.”
+
 # Can you briefly explain your experience and what you worked on in your last role
 I have worked on both monolithic and microservices-based environments.
     
