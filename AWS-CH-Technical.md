@@ -1,120 +1,230 @@
-# End-to-End Cloud & DevOps Interview Preparation (Resume + AWS SAA + JD Based)
+# AWS Solutions Architect – Scenario Puzzles (Case-Study Style Model Answers)
 
-## 1. Resume-Based Scenario Questions & Answers
+## 🟢 Compute & High Availability
 
-**Q1. You automated AWS infrastructure using Terraform. What issues did you face?**  
-I faced Terraform validation errors, state conflicts, and IAM permission issues. I resolved them by fixing variable values, using S3 and DynamoDB as a remote backend for state locking, and updating IAM permissions.
+1. **An application runs on EC2 and must remain available even if one AZ fails. How would you design this?**  
+Deploy EC2 instances across multiple AZs behind an Application Load Balancer. Use an Auto Scaling Group spanning AZs so traffic is routed only to healthy instances.
 
-**Q2. Why did you use S3 + DynamoDB as a remote backend?**  
-S3 stores the Terraform state centrally, and DynamoDB provides state locking to prevent concurrent updates.
+2. **Your EC2 instance CPU spikes during traffic peaks. How do you automatically handle this?**  
+Configure Auto Scaling based on CPU CloudWatch alarms so new EC2 instances are added during peak load and removed when traffic reduces.
 
-**Q3. Jenkins pipeline failed during deployment. How did you debug it?**  
-I checked Jenkins console logs, Maven build output, Docker image creation, and added Bash scripts to verify application and server health after deployment.
+3. **You need to run a batch job once per day. Which AWS service would you use?**  
+Use an EventBridge (CloudWatch Events) rule to trigger an ECS task, Lambda, or EC2 cron job once per day.
 
-**Q4. Why did you use Docker-based Jenkins agents?**  
-To maintain a consistent build environment and avoid dependency and version mismatch issues.
+4. **A workload needs containers but minimal infrastructure management. What compute option do you choose?**  
+Use ECS with Fargate so AWS manages servers, scaling, and patching.
 
-**Q5. Prometheus pod went into CrashLoopBackOff. What happened?**  
-Prometheus is stateful and requires persistent storage. The PVC was pending because storage was not provisioning automatically.
-
-**Q6. How did you fix the Prometheus storage issue?**  
-I configured a StorageClass, installed the AWS EBS CSI Driver, and set up IRSA so EKS could provision storage dynamically.
-
-**Q7. Why did you later move to Prometheus Operator?**  
-The operator simplifies management and enables dynamic scraping using ServiceMonitor and PodMonitor.
-
-**Q8. PVC stuck in Pending state. What did you check?**  
-PVC events, StorageClass configuration, EBS CSI driver pods, IAM permissions, and node AZ alignment.
-
-**Q9. Ingress not working. How did you debug it?**  
-I checked pod health, service endpoints, ingress rules, ingress controller status, LoadBalancer/DNS, and TLS certificate readiness.
-
-**Q10. What was your role in EKS platform support?**  
-I validated ingress, TLS, monitoring, storage, and assisted in troubleshooting pod, PVC, and Helm issues with senior engineers.
+5. **Your application requires fast startup and short-lived execution. Which service fits best?**  
+AWS Lambda, because it starts quickly and is designed for short-lived tasks.
 
 ---
 
-## 2. JD-Based Questions (Precision Group)
+## 🟢 Load Balancing & Scaling
 
-**Q11. How do you deploy an EC2 instance?**  
-Select AMI, instance type, VPC and subnet, security group, key pair, and launch the instance.
+6. **How do you distribute traffic across EC2 instances in multiple AZs?**  
+Use an Application Load Balancer with targets in multiple AZs.
 
-**Q12. What do you check if EC2 is not reachable?**  
-Instance state, security group rules, route table, internet gateway, and NACLs.
+7. **When would you choose ALB over NLB?**  
+Use ALB for HTTP/HTTPS and path-based routing. Use NLB for TCP/UDP and very low latency.
 
-**Q13. What do you monitor using CloudWatch?**  
-CPU, memory, disk usage, logs, alarms, and service health.
+8. **How do you perform zero-downtime deployments for an EC2-based application?**  
+Use rolling deployments or blue-green deployments with ALB target groups.
 
-**Q14. Why do you use Terraform?**  
-To automate infrastructure provisioning, reduce manual errors, and manage infrastructure as code.
+9. **How do you auto-scale containers running in ECS?**  
+Enable ECS Service Auto Scaling based on CPU, memory, or request count metrics.
 
-**Q15. Explain your Jenkins CI/CD flow.**  
-Code checkout, build and test, Docker image build, push to registry, deploy, and validate.
-
-**Q16. What automation scripts have you written?**  
-Bash scripts for health checks and disk usage, and Python scripts for API and service validation.
-
-**Q17. How do you secure AWS infrastructure?**  
-Using IAM least privilege, security groups, no hardcoded secrets, Secrets Manager, and monitoring.
-
-**Q18. How do you handle vulnerabilities and patching?**  
-By scanning images, applying OS patches, and updating container images.
-
-**Q19. How do you collaborate with L2/L3 teams?**  
-I gather logs and metrics, reproduce issues, and share clear findings to help resolve problems faster.
+10. **What happens if a target in an ALB target group becomes unhealthy?**  
+ALB stops routing traffic to it and sends traffic only to healthy targets.
 
 ---
 
-## 3. AWS Solutions Architect – Associate Case Studies
+## 🟢 Storage
 
-**Q20. Design a highly available web application on AWS.**  
-Use Route 53, ALB, Auto Scaling EC2/ECS across multiple AZs, RDS Multi-AZ, and CloudWatch.
+11. **An application needs shared file storage across multiple EC2 instances. What service do you use?**  
+Amazon EFS, as it supports shared file systems across instances.
 
-**Q21. What happens if one AZ goes down?**  
-ALB routes traffic to healthy AZs, Auto Scaling replaces instances, and RDS Multi-AZ fails over automatically.
+12. **You need low-latency block storage for a database. Which AWS service fits?**  
+Amazon EBS.
 
-**Q22. How do you handle sudden traffic spikes?**  
-Use Auto Scaling, ALB, and optionally SQS to buffer requests.
+13. **How do you store static website files cheaply and reliably?**  
+Use Amazon S3 with static website hosting and optionally CloudFront.
 
-**Q23. Production is down. What actions do you take?**  
-Check monitoring alerts and logs, verify ALB target health, rollback if needed, scale resources, and inform stakeholders.
+14. **How do you design storage for backups that must be kept for 7 years?**  
+Use S3 with lifecycle rules to move data to Glacier or Glacier Deep Archive.
+
+15. **What happens if an EC2 instance using EBS is terminated?**  
+By default, the root EBS volume is deleted, but data volumes can be retained.
 
 ---
 
-## 4. Tricky AWS SAA Scenario Questions
+## 🟢 Databases
 
-**Q24. EC2 needs secure access to S3. How do you do it?**  
-Attach an IAM role with S3 permissions to the EC2 instance.
+16. **You need a relational database with automatic failover and read scaling. What do you choose?**  
+Amazon Aurora with Multi-AZ and read replicas.
 
-**Q25. You need shared storage for multiple EC2 instances. What do you use?**  
-Amazon EFS.
+17. **When would you use DynamoDB instead of RDS?**  
+For massive scale, low-latency, key-value access without complex joins.
 
-**Q26. How do you deploy without downtime?**  
-Use Blue-Green or Rolling deployments with a load balancer.
+18. **How do you reduce read load on an RDS database?**  
+Use read replicas or caching with ElastiCache.
 
-**Q27. When do you use SQS?**  
-For asynchronous processing and decoupling services.
+19. **What happens if the primary Aurora instance fails?**  
+Aurora automatically promotes a replica to primary.
 
-**Q28. When do you choose DynamoDB?**  
-For low-latency, high-throughput key-value workloads.
+20. **Your application needs millisecond latency at massive scale. Which database fits best?**  
+Amazon DynamoDB.
 
-**Q29. How do you host a static website globally?**  
-Use S3 with CloudFront.
+---
 
-**Q30. How do you store secrets securely?**  
+## 🟢 Networking
+
+21. **How do you design a VPC with public and private subnets?**  
+Public subnets have an Internet Gateway; private subnets route traffic via NAT Gateway.
+
+22. **Why should application servers be in private subnets?**  
+For security, to prevent direct internet access.
+
+23. **How do EC2 instances in private subnets access the internet?**  
+Through a NAT Gateway.
+
+24. **How do you securely connect on-premises infrastructure to AWS?**  
+Use VPN or AWS Direct Connect.
+
+25. **What is the difference between Security Groups and NACLs?**  
+Security Groups are stateful and instance-level; NACLs are stateless and subnet-level.
+
+---
+
+## 🟢 Messaging & Decoupling
+
+26. **Your application must process jobs asynchronously. Which AWS service do you use?**  
+Amazon SQS.
+
+27. **How do you ensure messages are not lost if a worker crashes?**  
+Use SQS visibility timeout and retries.
+
+28. **When would you use SNS instead of SQS?**  
+When one message must notify multiple subscribers.
+
+29. **How do ECS services communicate without tight coupling?**  
+Using SQS, EventBridge, or internal service discovery.
+
+30. **How do you design an event-driven architecture in AWS?**  
+Use EventBridge or SNS to trigger Lambda or ECS tasks.
+
+---
+
+## 🟢 Monitoring & Reliability
+
+31. **How do you monitor CPU, memory, and application health?**  
+Use CloudWatch metrics, logs, and alarms.
+
+32. **What actions do you take if production goes down?**  
+Rollback, restore traffic, check logs/metrics, fix root cause.
+
+33. **How do you design an application to be fault-tolerant?**  
+Use Multi-AZ, auto scaling, load balancing, and retries.
+
+34. **How do you receive alerts when an EC2 instance fails?**  
+CloudWatch alarms with SNS notifications.
+
+35. **How do you implement self-healing in AWS?**  
+Use Auto Scaling Groups and health checks.
+
+---
+
+## 🟢 Security & IAM
+
+36. **How do you give an EC2 instance access to S3 securely?**  
+Attach an IAM role to the EC2 instance.
+
+37. **Why should you avoid using access keys inside applications?**  
+They can leak and are hard to rotate.
+
+38. **How do you restrict traffic to an application running in AWS?**  
+Use Security Groups, NACLs, and private subnets.
+
+39. **How do you securely store database credentials?**  
 Use AWS Secrets Manager or Parameter Store.
 
----
-
-## 5. Mock Architect-Level Communication Examples
-
-**Q31. Why do you prefer managed services?**  
-Managed services reduce operational overhead and improve reliability.
-
-**Q32. Explain how AWS services interlink in your architecture.**  
-User → Route 53 → ALB → EC2/ECS → RDS/S3 → CloudWatch.
+40. **What is the principle of least privilege?**  
+Grant only the minimum permissions required.
 
 ---
 
-## Key Terms to Use in Interviews
-Highly available, fault tolerant, multi-AZ, scalable, least privilege, automated, observability
+## 🟢 CI/CD & Automation
+
+41. **How do you automate infrastructure creation?**  
+Using Terraform or CloudFormation.
+
+42. **How do you deploy application updates without downtime?**  
+Use rolling or blue-green deployments.
+
+43. **How do you ensure the same environment across dev, test, and prod?**  
+Use Infrastructure as Code and Docker.
+
+44. **How do you roll back a failed deployment?**  
+Revert to the previous version or switch traffic back.
+
+45. **How do you automate patching of EC2 instances?**  
+Use AWS Systems Manager Patch Manager.
+
+---
+
+## 🟢 Disaster Recovery & Backup
+
+46. **How do you design a Multi-AZ architecture?**  
+Deploy resources across multiple AZs with load balancing.
+
+47. **What is the difference between backup and replication?**  
+Backup is point-in-time copy; replication keeps data in sync.
+
+48. **How do you recover data if a region goes down?**  
+Use cross-region backups or replication.
+
+49. **How do you design for high availability vs high durability?**  
+HA ensures uptime; durability ensures data safety.
+
+50. **What AWS services help achieve disaster recovery?**  
+S3, RDS/Aurora backups, Route 53, CloudFront.
+
+---
+
+## 🟢 Containers & Kubernetes (ECS / EKS)
+
+51. **When would you choose ECS over EKS?**  
+When you want simpler AWS-managed container orchestration.
+
+52. **How do you expose a containerized application to the internet?**  
+Use ALB with ECS or Service/Ingress in EKS.
+
+53. **How do you handle persistent storage for containers?**  
+Use EBS, EFS, or managed databases.
+
+54. **How do you scale container workloads automatically?**  
+Use ECS Service Auto Scaling or HPA in EKS.
+
+55. **How do you secure containers running in AWS?**  
+IAM roles, security groups, image scanning, secrets management.
+
+---
+
+## 🟢 Cost Optimization
+
+56. **How do you reduce EC2 costs for steady workloads?**  
+Use Reserved Instances or Savings Plans.
+
+57. **When should you use Spot Instances?**  
+For fault-tolerant, non-critical workloads.
+
+58. **How do you control unexpected AWS costs?**  
+Budgets, cost alerts, and monitoring usage.
+
+59. **How do you design a cost-optimized architecture?**  
+Right-size resources, auto scaling, serverless where possible.
+
+60. **What AWS tools help analyze and reduce costs?**  
+AWS Cost Explorer, Budgets, and Trusted Advisor.
+
+---
+✅ **End of AWS SAA Case-Study Answers**
