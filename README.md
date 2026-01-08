@@ -169,3 +169,79 @@ Common causes I check are:
 # “A Kubernetes node goes down. What happens to the pods running on that node?”
     “When a Kubernetes node goes down, the control plane marks the node as NotReady.
     The pods running on that node are terminated, and Kubernetes automatically reschedules them on healthy nodes to maintain the desired state,      as long as they are managed by a controller like a Deployment or ReplicaSet.”
+# What is AWS ECS, and why would you use it instead of running containers manually on EC2?
+
+    “AWS ECS is a container orchestration service provided by AWS.
+    If we run containers manually on EC2, we have to manage container restarts, scaling, and failures ourselves.
+    
+    In ECS, services automatically maintain the desired number of containers, handle restarts, and support auto scaling based on load.
+    
+    ECS also integrates with AWS services like ALB, IAM, and CloudWatch.
+    
+    We can run ECS using EC2 launch type or Fargate, where Fargate removes the need to manage servers completely.”
+
+# What is the difference between an ECS Task and an ECS Service
+
+    “An ECS Task is a single running instance of a container, similar to a Pod in Kubernetes.
+    An ECS Service is used to manage tasks and ensure a desired number of tasks are always running.
+    Services provide features like auto-healing, load balancer integration, and zero-downtime deployments.”
+
+# What is Blue-Green deployment in ECS, and how is it implemented?
+
+    “Blue-Green deployment is a strategy used to deploy a new application version without downtime.
+    
+    In ECS, we run two versions of the application at the same time: the old version (Blue) and the new version (Green).
+    
+    Both versions are registered to separate target groups behind an Application Load Balancer. Initially, traffic goes to the Blue target           group. After validation, traffic is switched to the Green target group.
+    
+    If any issue occurs, we can quickly rollback by routing traffic back to the Blue version.”
+    
+# What is Amazon Aurora, and why would ECS applications use Aurora instead of a normal database?
+
+    Amazon Aurora is a managed relational database engine provided by AWS under the RDS service.
+    It is compatible with MySQL and PostgreSQL and is designed for high availability and performance.
+    ECS applications use Aurora because it supports Multi-AZ, automatic failover, and read scaling, 
+    so the application can continue working even if one database instance or Availability Zone fails.”
+
+# What is Amazon SQS, and how does it work with ECS?
+
+Amazon SQS is an asynchronous messaging service in AWS.
+It is used with ECS to decouple components by sending messages between services or tasks.
+In ECS, one service can push messages to SQS, and worker tasks can consume those messages to perform background jobs like sending emails, processing logs, or handling long-running tasks.
+This improves reliability and scalability because tasks don’t have to communicate directly.”
+    
+    🧠 Real-Time Example (Very Easy to Explain)
+    
+    User places an order
+    
+    ECS web service sends message to SQS
+    
+    Worker ECS task polls SQS
+    
+    Worker sends email / processes data
+    
+    Message is deleted after success
+    
+    ➡️ Web app stays fast, background work happens separately
+SQS allows ECS services to communicate asynchronously and process tasks reliably without tight coupling.
+
+# How do you auto-scale ECS tasks and infrastructure?
+    
+    “In ECS, we scale applications at two levels.
+    
+    Task scaling is done using ECS Service Auto Scaling, where the number of running tasks increases or decreases based on metrics like CPU or memory usage.
+    
+    Infrastructure scaling depends on the launch type.
+    For EC2 launch type, we use an Auto Scaling Group to add or remove EC2 instances.
+    For Fargate, AWS automatically manages and scales the infrastructure, so no EC2 management is required.”
+
+# How do you secure AWS infrastructure and ECS applications?
+
+    “We secure AWS infrastructure and ECS applications using multiple layers.
+    
+    At the access level, we use task-level IAM roles so each ECS task has only the permissions it needs, instead of using static credentials.
+    
+    At the network level, we use security groups to allow only required inbound and outbound traffic,
+    and we keep application containers in private subnets.
+    
+    We also scan Docker images, secure secrets using AWS Secrets Manager, and enable monitoring and logging for visibility.”
