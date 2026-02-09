@@ -200,127 +200,181 @@ A bottleneck is the one resource limiting overall performance.
 ## 🟥 Incident 1: Jenkins Pipeline Failure (CI/CD)
 
 What: Jenkins build or deployment failed
+
 Why: Dependency issue, agent down, permission or plugin error
+
 How: Check logs, fix config, restart agent, re-run pipeline
+
 Cmd: jenkins logs, systemctl status jenkins, pipeline console output
 
 ## 🟥 Incident 2: Docker Container Crashing Repeatedly
 
 What: Container keeps restarting
+
 Why: App crash, wrong entrypoint, missing env vars
+
 How: Check logs, fix image/config, redeploy container
+
 Cmd: docker ps -a, docker logs <id>, docker inspect <id>
 
 ## 🟥 Incident 3: Docker Container OOMKilled
 
 What: Container killed even though host has free RAM
+
 Why: Container exceeded cgroup memory limit
+
 How: Increase memory limit or fix memory leak
+
 Cmd: docker inspect <id>, dmesg | grep -i oom
 
 ## 🟥 Incident 4: High CPU Usage in Docker Container
 
 What: Application slow, CPU spike
+
 Why: No CPU limit, infinite loop, traffic surge
+
 How: Set CPU limits, optimize app, scale containers
+
 Cmd: docker stats, top
 
 ## 🟥 Incident 5: Kubernetes Pod CrashLoopBackOff
 
 What: Pod keeps restarting
+
 Why: App crash, wrong config, missing secret
+
 How: Fix config/app and redeploy pod
+
 Cmd: kubectl logs <pod>, kubectl describe pod <pod>
 
 ## 🟥 Incident 6: Kubernetes Pod OOMKilled
 
 What: Pod restarts due to memory error
+
 Why: Memory limit exceeded
+
 How: Increase memory limit or optimize app
+
 Cmd: kubectl describe pod <pod>
 
 ## 🟥 Incident 7: Pod Stuck in Pending State
 
 What: Pod not scheduled
+
 Why: No node resources or PVC pending
+
 How: Add nodes or fix resource requests
+
 Cmd: kubectl describe pod <pod>, kubectl get nodes
 
 ## 🟥 Incident 8: Kubernetes Service Not Reachable
 
 What: Service exists but app not accessible
+
 Why: Selector mismatch or pod not ready
+
 How: Fix labels and readiness probe
+
 Cmd: kubectl get svc, kubectl get endpoints
 
 ## 🟥 Incident 9: Ingress / LoadBalancer Not Working
 
 What: Domain not reachable
+
 Why: Wrong ingress rules or TLS issue
+
 How: Fix host/path rules and certificates
+
 Cmd: kubectl describe ingress, ingress controller logs
 
 ## 🟥 Incident 10: TLS / Certificate Issue in Kubernetes
 
 What: HTTPS not working
+
 Why: Expired or misconfigured TLS cert
+
 How: Renew cert using cert-manager
+
 Cmd: kubectl describe certificate, kubectl get secrets
 
 ## 🟥 Incident 11: Terraform Apply Failure
 
 What: Infrastructure provisioning failed
+
 Why: IAM permission or validation error
+
 How: Fix IAM policy and re-apply Terraform
+
 Cmd: terraform plan, terraform apply
 
 ## 🟥 Incident 12: Partial Resources Created by Terraform
 
 What: Infra partially created, state missing
+
 Why: Apply interrupted or node crashed
+
 How: Import resources and continue apply
+
 Cmd: terraform import, terraform state list
 
 ## 🟥 Incident 13: IAM Permission Issue in AWS/EKS
 
 What: Service or pod cannot access AWS resource
+
 Why: Missing IAM role or policy
+
 How: Fix IAM role or IRSA configuration
+
 Cmd: AWS IAM console, pod logs
 
 ## 🟥 Incident 14: Monitoring Alert (Prometheus)
 
 What: CPU/memory alert triggered
+
 Why: Resource exhaustion or traffic spike
+
 How: Scale pods or tune resource limits
+
 Cmd: kubectl top pod, Grafana dashboards
 
 ## 🟥 Incident 15: Disk Full Due to Logs or Docker
 
 What: App stopped due to disk full
+
 Why: Logs or unused Docker images
+
 How: Clear logs and prune Docker data
+
 Cmd: df -h, du -sh /var/log/*, docker system prune
 
 ## 🟥 Incident 16: Node NotReady in Kubernetes
 
 What: Node unavailable
+
 Why: Disk pressure, kubelet or network issue
+
 How: Fix disk/network and restart kubelet
+
 Cmd: kubectl describe node <node>, systemctl restart kubelet
 
 ## 🟥 Incident 17: Application Slow but CPU Low (I/O Wait)
 
 What: App slow, CPU looks free
+
 Why: Disk or network I/O blocking processes
+
 How: Reduce I/O, add caching, improve storage
+
 Cmd: top, iostat, vmstat
 
 ## 🟥 Incident 18: Server Not Reachable via SSH
 
 What: SSH connection fails
+
 Why: Disk full, high load, firewall or network issue
+
 How: Free disk, restart sshd, allow port 22
+
 Cmd: df -h, top, iptables -L, systemctl status sshd
 
 ---
