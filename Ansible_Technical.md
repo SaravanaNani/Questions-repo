@@ -95,14 +95,17 @@ tasks, handlers, vars, defaults, files, templates, meta.
 
 26. **What is the difference between a role and a playbook?**  
 A role is reusable; a playbook defines execution flow.
+A playbook defines when and where to run, while a role defines what to run in a reusable way.
 
-27. **How do you share roles across projects?**  
+
+28. **How do you share roles across projects?**  
 Using roles_path, Ansible Galaxy, or requirements.yml.
+We share roles using a common roles_path or Git-based roles installed via requirements.yml.
 
-28. **What is the difference between import_role and include_role?**  
+29. **What is the difference between import_role and include_role?**  
 import_role loads at parse time; include_role loads dynamically at runtime.
 
-29. **What is parse time vs runtime?**  
+30. **What is parse time vs runtime?**  
 Parse time is playbook loading; runtime is task execution.
 
 ---
