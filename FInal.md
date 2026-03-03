@@ -154,3 +154,79 @@ Access modes define how a volume can be mounted across nodes.
       We use a remote backend like S3 to store the state file centrally so multiple team members can collaborate safely. We also enable state locking using DynamoDB to prevent concurrent modifications.
       
       Without remote backend, if developers use local state files, it can lead to conflicts, duplicate resource creation, infrastructure drift, and accidental overwrites.
+
+### 12. What is infrastructure drift? How does Terraform detect it? And how do you handle drift in production?
+      
+      Infrastructure drift occurs when the actual infrastructure differs from the Terraform state due to manual changes or external modifications. Terraform detects drift during terraform plan, which compares the state file with real infrastructure. If the drifted change is intentional, we can update the Terraform code or import the resource. If the change is unintended, running terraform apply will reconcile the infrastructure back to the desired state.
+
+### 13. Someone manually changed EC2 instance type from t2.micro → t3.medium. What will terraform plan show? And what will happen on terraform apply?
+
+      Terraform plan will show the instance type changing back to t2.micro. 
+      On apply, Terraform will either update the instance in-place or replace it depending on AWS behavior.
+
+### 14. What happens if two developers run terraform apply at same time without state locking? What problem can occur?
+
+      If two developers run terraform apply simultaneously without state locking, it can cause state corruption, duplicate resource creation, or inconsistent infrastructure. State locking ensures that only one operation modifies the state at a time, preventing concurrency issues.
+
+### 15. Someone deleted an EC2 instance manually in AWS. Terraform state still has that resource. What happens when you run: terraform plan And what will happen after terraform  apply?
+
+      when we run plan: Terraform checks AWS and sees: EC2 is missing
+      So it shows: + aws_instance.my_ec2 will be created
+      
+      Because Terraform thinks: "Hey, this EC2 should exist but it's missing. I need to create it."
+      
+      What Happens When You Run terraform apply?
+      
+      Terraform: Recreates the EC2 instance Updates state file
+      
+      Now:State = Reality again
+
+### 16. What is Terraform taint? When would you use it?
+
+      Terraform taint marks a resource to be destroyed and recreated during the next apply. It is useful when a resource is in a bad state or misconfigured.
+      However, in newer Terraform versions, the recommended approach is using the -replace flag during apply.
+      This directly replaces resource without tainting state first.
+
+### 17. You accidentally tainted a production RDS instance. What will happen on next apply? And why can that be dangerous? 
+      
+      If we taint a production RDS instance, Terraform will destroy and recreate it during the next apply.
+      This can cause application downtime and potential data loss if backups or deletion protection are not configured. 
+      Therefore, tainting stateful resources in production is extremely risky and should be avoided unless carefully planned.
+      For stateful resources like RDS, it is safer to modify parameters in-place or use snapshot-based restoration instead of force replacemen
+
+### 18.Docker Volumes
+      
+      Named volumes are managed by Docker and used for persistent data storage independent of container lifecycle. 
+      Bind mounts map a host directory into a container and are commonly used in development environments. 
+      tmpfs mounts store data in memory and are used for temporary or sensitive data that should not be written to disk.
+      
+### 19. A containerized database (MySQL) suddenly loses all data after restart. What could be the possible reasons?
+
+      The most common reason is that the MySQL container was running without a persistent volume, so data was stored inside the container filesystem and lost after restart. 
+      Other reasons include incorrect volume mount path, recreating container without reusing the same named volume, or accidental deletion of bind-mounted host directories.
+      
+### 20. ADD vs COPY in dockerfile?
+
+      COPY and ADD both copy files into the image. However, ADD has additional features like downloading files from remote URLs and automatically extracting tar archives. Because ADD has implicit behavior and less predictability, it is recommended to use COPY for simple file transfers and use RUN with curl or wget for downloading files.
+
+### 21. Your Docker image is 2GB. How do you reduce it?
+
+      First, I would check the base image. Instead of using a full OS image like Ubuntu, I would switch to a lightweight base image like Alpine or a slim variant.
+      
+      Second, I would implement multi-stage builds. In the first stage, I build the application with all dependencies. In the final stage, I copy only the required artifact, such as a JAR or WAR file, into a minimal runtime image.
+      
+      Third, I would use a .dockerignore file to exclude unnecessary files like .git, logs, node_modules, or build artifacts from the build context.
+      
+      Fourth, I would optimize layer caching by copying dependency files first and running dependency installation before copying the full source code.
+      
+      Finally, I would clean up unnecessary packages and remove cache files during build to reduce layer
+
+      Remove build tools from runtime image
+
+     Use distroless images for production
+
+### 22. Deployment vs Statefulset vs Deamonset
+      
+      Deployment is used for stateless applications and manages replica count with rolling updates and rollback support. StatefulSet is used for stateful applications that require stable network identity and persistent storage. DaemonSet ensures that a specific pod runs on every node, commonly used for monitoring or logging agents.
+
+### 23
