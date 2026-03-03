@@ -229,4 +229,49 @@ Access modes define how a volume can be mounted across nodes.
       
       Deployment is used for stateless applications and manages replica count with rolling updates and rollback support. StatefulSet is used for stateful applications that require stable network identity and persistent storage. DaemonSet ensures that a specific pod runs on every node, commonly used for monitoring or logging agents.
 
-### 23
+### 23 labels vs selectors vs Annotations
+
+      Labels are key-value pairs used to identify and group Kubernetes objects and are used for selection by services and replica sets. 
+      Selectors use labels to match specific objects. 
+      Annotations are also key-value pairs but are used to store additional metadata and are not used for selection.
+
+### 24. Startup vs liveness  vs Readiness Probes
+
+      Startup probe is used for slow-starting applications and ensures liveness and readiness probes do not run until the application is fully initialized.
+      Liveness probe checks whether the application is healthy and restarts the container if it fails. 
+      Readiness probe determines whether the pod is ready to receive traffic and removes it from service endpoints if it fails.
+
+### 25. Your application depends on a database. The database goes down temporarily. Which probe should fail? Liveness or Readiness? And why?
+
+      If the database goes down temporarily, the readiness probe should fail so the pod is removed from service endpoints and stops receiving traffic. 
+      Liveness probe should not fail because restarting the container will not resolve an external dependency issue.
+
+### 26. During rolling update: How do readiness probes help achieve zero downtime?
+      
+      During a rolling update, Kubernetes creates new pods first. The readiness probe ensures that new pods do not receive traffic until they are fully ready.
+      Once the readiness probe succeeds, the pod is added to service endpoints.
+      Only then are old pods terminated. This controlled traffic shifting ensures zero downtime.
+
+Important Detail You Slightly Missed Rolling update behavior is controlled by:
+
+      strategy:
+      rollingUpdate:
+       maxUnavailable
+       maxSurge
+      
+      Example:
+      
+      maxUnavailable: 1
+      maxSurge: 1
+      
+      This ensures at least minimum pods are always running.
+
+      maxUnavailable defines how many pods can be unavailable during a rolling update, 
+      while maxSurge defines how many extra pods can be temporarily created above the desired replica count.
+      Together they control availability and update speed during deployment rollout.
+
+### 27.  Node elector vs node affintiy vs taints vs tolerations
+
+      NodeSelector and Node Affinity are used to control pod placement based on node labels.
+      Pod Affinity and Anti-Affinity control pod-to-pod placement rules. 
+      Taints are applied to nodes to prevent pods from being scheduled, and tolerations allow specific pods to bypass those restrictions.
