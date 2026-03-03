@@ -108,15 +108,49 @@ and check the Events section for the exact error message. Based on the error, I 
     Usually node IAM role handles it
     So imagePullSecret is not required.
 
-   ### 7.What is the difference between: PersistentVolume (PV) PersistentVolumeClaim (PVC) StorageClass
+### 7.What is the difference between: PersistentVolume (PV) PersistentVolumeClaim (PVC) StorageClass
 
-    A PersistentVolume (PV) is a cluster-scoped storage resource provisioned either manually or dynamically. 
-    It represents actual storage like an EBS volume.
-    
-    A PersistentVolumeClaim (PVC) is a request made by a pod for storage with specific size and access mode.
-    
-    A StorageClass defines how dynamic provisioning should happen. It specifies the provisioner (like EBS CSI driver), volume type, and parameters.
-    
-    In EKS, when a pod creates a PVC, Kubernetes checks the StorageClass. The StorageClass triggers the EBS CSI driver, which creates an EBS volume in AWS. 
-    Once created, it becomes a PV and is bound to the PVC. The volume is then attached to the worker node where the pod is running.
-   ### 8.  
+      A PersistentVolume represents actual storage like an AWS EBS volume. 
+      
+      A PersistentVolumeClaim is a request made by a pod for storage. 
+      
+      A StorageClass defines how the volume should be dynamically provisioned using a CSI driver. 
+      
+      In EKS, when a PVC is created, the StorageClass triggers the EBS CSI driver to create an EBS volume, which becomes a PV and gets bound to the PVC. The volume is then attached to the node where the pod runs.
+   
+
+### 8. What is difference between RWO, ROX, RWX? Which does EBS support?
+
+
+Access modes define how a volume can be mounted across nodes. 
+
+      ReadWriteOnce allows a volume to be mounted as read-write by only one node at a time. 
+      ReadOnlyMany allows multiple nodes to mount the volume as read-only. 
+      ReadWriteMany allows multiple nodes to mount the volume as read-write simultaneously. 
+      
+      In AWS, EBS supports only ReadWriteOnce because it can be attached to only one EC2 instance at a time.
+
+      Even though EBS supports RWO:
+      
+      Multiple pods can use same volume if: They are on same node. That’s an advanced nuance.  
+
+### 9. If a pod using EBS volume is running on Node A, and Node A crashes, What happens to: The pod? The volume? How does Kubernetes recover?
+      
+      If a node running a pod with EBS volume crashes, Kubernetes detects the node as NotReady and reschedules the pod to another node if it's managed by a          Deployment or ReplicaSet.
+      However, since EBS supports only ReadWriteOnce, the volume must first detach from the failed node before attaching to the new node. 
+      This can cause temporary downtime. If the volume gets stuck in detaching state, manual intervention may be required. 
+       In contrast, if the pod uses hostPath, it cannot be rescheduled because the storage is local to the node.
+
+### 10. How can we reduce downtime in such EBS + node failure scenarios?
+
+      I would run multiple replicas across different nodes using Deployments and pod anti-affinity to ensure high availability. 
+      I would deploy nodes across multiple availability zones. 
+      Since EBS supports only ReadWriteOnce, I would avoid relying on single-replica stateful workloads. For shared storage needs, I would use EFS instead.
+      
+### 11. What is Terraform state file? Why do we use remote backend? What problems happen if we don’t use remote backend?
+      
+      Terraform state file stores the mapping between the Terraform configuration and the real-world infrastructure resources. It keeps track of resource IDs, attributes, and dependencies so Terraform knows what to create, update, or delete.
+      
+      We use a remote backend like S3 to store the state file centrally so multiple team members can collaborate safely. We also enable state locking using DynamoDB to prevent concurrent modifications.
+      
+      Without remote backend, if developers use local state files, it can lead to conflicts, duplicate resource creation, infrastructure drift, and accidental overwrites.
