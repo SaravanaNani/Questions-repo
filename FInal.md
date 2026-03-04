@@ -554,4 +554,207 @@ To design a highly available AWS architecture,
       Then I review slow query logs to identify inefficient queries.
       I also verify whether the instance has reached connection limits or storage I/O limits.
       If required, I scale the instance or optimize queries and indexes
+
+### 59. If your EKS worker node disk becomes full, what problems can occur?
+
+If node disk becomes full:
+
+Problems may occur:
+
+      1️⃣ Pods fail to start
+      2️⃣ Container image pull fails
+      3️⃣ kubelet cannot write logs
+      4️⃣ Pods enter Evicted state      
+
+### 60. Your website suddenly becomes slow in production. What 3 layers will you check first? 
+Example: infrastructure - application - database
+Explain your troubleshooting approach.
+
+
+Check three layers.
+
+1️⃣ Infrastructure layer
       
+      Check: CPU - Memory - Disk - Network
+      Commands:
+            top
+            free -m
+            df -h
+
+2️⃣ Application layer
+
+      Check: application logs - thread pool - API latency
+      
+      Example:
+      500 errors
+      timeouts
+
+3️⃣ Database layer
+      
+      Check: slow queries - DB connections - IOPS
+      
+      Example:
+      CPU 95%
+      slow query logs
+
+
+### 61. What happens when a Kubernetes node goes down? What happens to the pods?
+
+When a node becomes NotReady, Kubernetes detects it using the Node Controller.
+
+FOr stateless pods: New pods scheduled on healthy nodes
+
+      Node failure
+       ↓
+      Node marked NotReady
+       ↓
+      Pods on that node become unavailable
+       ↓
+      Scheduler reschedules pods on another node
+
+For Statefulset pods: 
+
+      If using EBS/PVC → pod rescheduled and volume reattached
+      
+      If using local storage → pod may wait until node recovers
+
+### 62. Your Jenkins pipeline suddenly fails when pushing image to ECR. WHat you will check
+      
+      1️⃣ Check AWS login : aws ecr get-login-password
+      
+      2️⃣ Check IAM permissions Required policy: AmazonEC2ContainerRegistryFullAccess
+      
+      3️⃣ Check ECR repository exists : aws ecr describe-repositories
+      
+      4️⃣ Check Docker login: docker login
+      
+      5️⃣ Check image tag format: Example: 123456.dkr.ecr.us-east-1.amazonaws.com/app:v1
+
+
+### 63 What is Route 53 and how does it work?
+
+Route 53 is AWS DNS service.
+
+      It maps: domain name → IP address
+      
+      Example: example.com → 52.12.45.21
+      
+      It supports routing strategies:
+      
+      Simple routing
+      Weighted routing
+      Latency routing
+      Failover routing
+      Geo-location routing
+      
+      Example failover: Primary server fails → traffic goes to backup server
+
+### 64. Auto Scaling not launching instances even though CPU usage is high. What will you check?
+      
+      1️⃣ Check scaling policy : CPU threshold configured?
+      
+      2️⃣ Check Auto Scaling limits: min - max - desired
+      
+      Example problem: max instances = 2 -> Scaling cannot happen.
+      
+      3️⃣ Check launch template configuration
+      
+      Possible problems: wrong AMI - invalid instance type - missing IAM role
+      
+      4️⃣ Check subnet capacity: Subnet may not have enough IP addresses.
+      
+      5️⃣ Check CloudWatch alarms : Scaling depends on CloudWatch metrics.
+      
+### 65. What happens if one Availability Zone fails? How does AWS maintain availability?
+
+      AWS designs architecture across multiple AZs.
+      Load balancer distributes traffic across AZs.
+      
+            If AZ-1 fails:
+      
+            Load Balancer
+               ↓
+            Only AZ-2 servers receive traffic
+      
+      Also:
+      Auto Scaling launches replacement instances
+      RDS Multi-AZ switches to standby database
+
+### 66. IAM User vs Role vs Policy
+
+      | Component  | Purpose                                   |
+      | ---------- | ----------------------------------------- |
+      | IAM User   | identity for a person or application      |
+      | IAM Role   | temporary permissions assumed by services |
+      | IAM Policy | permission rules defining allowed actions |
+
+
+### 67. How Pods Access AWS Services Securely (IRSA)
+### 68. ECS Fargate vs ECS EC2
+### 69. Public subent vs private subnet
+### 70. Horizontal vs Vertical Scaling
+### 71. What is the purpose of a NAT Gateway?
+
+### 72. Why EC2 in Private Subnet?
+      EC2 instances are placed in private subnets to prevent direct internet access.
+      Benefits: better security - controlled access - protection from direct attacks
+
+### 73. ECS vs EKS?
+      
+      | Feature    | ECS                   | EKS                   |
+      | ---------- | --------------------- | --------------------- |
+      | Type       | AWS container service | Managed Kubernetes    |
+      | Complexity | Simple                | Advanced              |
+      | Control    | AWS managed           | Kubernetes control    |
+      | Use case   | small/simple apps     | complex microservices |
+
+### 74. S3 vs EBS vs EFS
+### 75. Security Group vs Network ACL
+---
+### 76.Your Kubernetes application suddenly stops receiving traffic, but pods are running. What are the first things you will check?
+
+      If pods are running but traffic is not reaching the application,
+      I first check pod readiness status. Then I verify the Kubernetes service configuration and ensure the service selectors match the pod labels. 
+      Next I check service endpoints to confirm the pods are registered. 
+      After that I validate ingress rules and ensure the ingress controller is running properly. 
+      Finally I check the load balancer, security groups, and DNS configuration to ensure traffic is reaching the cluster
+---
+### 77. Explain a production incident you handled and how you resolved it.”
+
+Situation: Our Jenkins CI/CD server suddenly became unavailable.
+      
+    Problem: Developers could not trigger builds.
+      
+    First I checked: EC2 instance status and Jenkins service: systemctl status jenkins
+      
+    The service was corrupted due to configuration issues.
+      
+    Root Cause: Jenkins configuration files were corrupted.
+      
+    Fix: We restored Jenkins using Latest EC2 snapshot. Restored Jenkins configuration from /var/lib/jenkins
+      
+    After restoring the directory: Jenkins restarted successfully
+      
+Result: CI/CD pipelines resumed without losing job configurations.
+---
+Situation : While deploying the Prometheus monitoring stack in our Kubernetes cluster, the Prometheus pod was stuck in Pending state.
+
+      Problem: The pod could not start because the PersistentVolumeClaim was not getting bound.
+      
+      First I checked: kubectl describe pod prometheus | kubectl get pvc
+      
+      I noticed: PVC status: Pending
+      
+      Then I checked whether a StorageClass was available: kubectl get storageclass
+      
+      There was no storage class configured.
+      
+      Root Cause: The cluster did not have the AWS EBS CSI driver installed, so dynamic volume provisioning was not working.
+      
+      Fix Steps taken: Installed AWS EBS CSI driver and Created a StorageClass
+      
+      Prometheus PVC automatically created the EBS volume
+      
+      After that: PVC → Bound -> Pod → Running
+
+Result: Prometheus started successfully and monitoring stack became operational.
