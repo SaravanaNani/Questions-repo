@@ -428,3 +428,101 @@ Our Jenkins pipeline includes stages such as
  ### 45. If one pod keeps restarting while others are healthy?
 
       If one pod keeps restarting while others are healthy, I first check the pod logs and events to see if the application is crashing or if the liveness probe is failing. Then I verify resource limits to check for OOMKilled errors. If those are fine, I investigate node-level issues like memory pressure or disk pressure. I also check if any volume mounts or dependencies like databases are causing the container to crash.
+
+### 46 use of Top comand in linux?
+
+      The top command is used to monitor real-time system performance including
+      CPU usage, memory consumption, running processes, load average, and process IDs.
+
+### 47. Find process using port 8080
+ 
+       netstat -tulnp | grep 8080
+       
+       ss -tulnp | grep 8080
+       
+       lsof -i :8080 - this shows process ID that uses the port 8080
+
+### 48. Soft link vs Hard link
+
+      A hard link is another name for the same file inode and cannot span different file systems,
+      while a soft link (symbolic link) is a pointer to the file path and can link across file systems.
+      A hard link remains valid if the original file is deleted, but a soft link breaks if the target is removed.
+
+### 49.  A Linux server suddenly becomes very slow. What 5 commands will you run first to diagnose the issue? Explain what each command checks.
+
+If a Linux server becomes slow, 
+      
+      I first check system resource usage using commands like top or htop to identify CPU-intensive processes.
+      
+      Then I check system load using uptime, 
+      
+      verify memory usage using free -m, 
+      
+      check disk space using df -h, 
+      
+      and analyze disk I/O using iostat or iotop to identify bottlenecks.
+
+### 50. A service running on port 8080 suddenly stops responding. What steps will you take to troubleshoot it?    
+
+   If a service on port 8080 stops responding, 
+   
+      I first check whether the process is running using commands like ps or lsof. 
+      
+      Then I verify if the port is listening using netstat or ss. 
+      
+      If the service is running inside a container, I inspect the container status and logs. 
+      
+      I also check application logs for errors - journalctl -f servicename and 
+      
+      verify firewall rules or resource issues that may prevent the service from responding.
+      
+### 51. A log file on a Linux server grows to 100 GB and fills the disk. How would you prevent this problem permanently?
+      
+      To prevent large log files from filling the disk, I would configure log rotation using the logrotate utility. 
+      It automatically rotates, compresses, and deletes old logs based on defined retention policies.
+      In production environments, logs are also usually shipped to centralized logging systems like ELK or CloudWatch to avoid disk space issues.
+
+ ### 52. A server suddenly shows 100% CPU usage. How will you identify which process is causing it and stop it if necessary? 
+
+      If CPU usage reaches 100%, 
+      
+      I first run top or htop to identify the process consuming high CPU.
+      
+      Then I confirm the process details using ps. 
+      
+      If it is an abnormal or stuck process, I try to terminate it gracefully using kill, and if necessary use kill -9.
+      
+      After that, I investigate the application logs or cron jobs to identify the root cause.
+
+### 53. A server suddenly runs out of disk space. What commands will you run to find what is consuming the space?
+
+If a server runs out of disk space, 
+      
+      I first run df -h to identify which filesystem is full. 
+      
+      Then I use du -sh to find directories consuming the most space. 
+      
+      I drill down into large directories and use find to identify large files. 
+      
+      After identifying the root cause, I clean up unnecessary logs, temporary files, or rotate logs to free space.
+
+### 54. What is the difference between: grep vs egrep vs fgrep?
+
+      grep is used to search for patterns in files or command output.
+      egrep supports extended regular expressions for more complex pattern matching.
+      fgrep searches for fixed strings without interpreting regex patterns and is faster for large files.
+
+ ### 55. You are SSH’d into a Linux server and accidentally started a process in the foreground. Example: python script.py Now the process is running and blocking your terminal.
+How do you:
+1️⃣ Send it to background
+2️⃣ Bring it back to foreground later?
+   
+    If a process is running in the foreground and blocking the terminal,
+    
+    I press Ctrl+Z to suspend it and then run the " bg "command to send it to the background. 
+    
+    Later, I can bring it back to the foreground using the " fg " command.
+    
+    I can also check running background jobs using the " jobs " command.
+
+### 56. 
