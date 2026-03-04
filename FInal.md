@@ -525,4 +525,33 @@ How do you:
     
     I can also check running background jobs using the " jobs " command.
 
-### 56. 
+### 56. You have a web application used by millions of users. Design a highly available AWS architecture.
+
+To design a highly available AWS architecture,
+
+      I would create a VPC across multiple Availability Zones with public and private subnets. 
+      
+      An Application Load Balancer in the public subnet distributes incoming traffic to EC2 instances running in an Auto Scaling group in private subnets.
+      
+      The database layer uses Amazon RDS with Multi-AZ deployment for high availability. 
+      
+      A NAT Gateway allows private instances to access the internet securely.
+      
+      For performance improvement, I would integrate ElastiCache Redis. Security is enforced using security groups and IAM roles.
+
+### 57. Your EC2 instances behind the Load Balancer suddenly become unhealthy. What are the first 5 things you will check to troubleshoot this? Answer step-by-step like production troubleshooting.
+
+      If an EC2 instance behind a load balancer becomes unhealthy,
+      I first check the target group health status to see the exact failure reason.
+      Then I verify the health check configuration such as path and port. 
+      Next, I confirm the EC2 security group allows traffic from the load balancer. 
+      I also log into the instance to check whether the application service is running and verify system resources like CPU and memory.
+      Finally, I check CloudWatch metrics to see if resource exhaustion or traffic spikes caused the issue.
+
+### 58. Suppose your RDS database suddenly becomes slow in production. What 5 things will you check immediately?
+
+      If an RDS database becomes slow, I first check CloudWatch metrics such as CPU utilization, database connections, memory usage, and IOPS.
+      Then I review slow query logs to identify inefficient queries.
+      I also verify whether the instance has reached connection limits or storage I/O limits.
+      If required, I scale the instance or optimize queries and indexes
+      
