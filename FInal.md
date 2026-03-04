@@ -275,3 +275,156 @@ Important Detail You Slightly Missed Rolling update behavior is controlled by:
       NodeSelector and Node Affinity are used to control pod placement based on node labels.
       Pod Affinity and Anti-Affinity control pod-to-pod placement rules. 
       Taints are applied to nodes to prevent pods from being scheduled, and tolerations allow specific pods to bypass those restrictions.
+
+### 28.You have 3 worker nodes. You want: Monitoring pods to run on every node Application pods NOT to run on monitoring-only node. How would you design this using taints and tolerations?
+
+      Monitoring pods are deployed using DaemonSet so they run on every node. If a node should be reserved only for monitoring workloads, we can apply a taint to that node. 
+      Monitoring pods will have a matching toleration, allowing them to run there, while application pods without tolerations will not be scheduled on that node.
+
+### 29. Servcies in k8s
+
+      Kubernetes provides different service types such as ClusterIP, NodePort, and LoadBalancer. 
+      ClusterIP is the default service used for internal communication within the cluster. 
+      NodePort exposes the service on a specific port of each node. 
+      LoadBalancer creates a cloud load balancer to expose the application externally. 
+      Headless services are used mainly for StatefulSets to provide direct DNS access to individual pods. 
+      ExternalName services map a Kubernetes service to an external DNS name.
+ 
+ ### 30.  why nodeport serivce rarely used in Prod?
+       
+      NodePort exposes services on every worker node, which can create security risks and is difficult to manage at scale.
+      It also does not provide a managed external load balancer. 
+      In production environments, we typically use LoadBalancer services or an Ingress controller to expose applications more securely and efficiently.
+
+### 31. Ingress vs Service LB?
+
+      Yes, pods can communicate directly using pod IP because Kubernetes provides flat networking across the cluster. However, pod IPs are ephemeral and change when pods restart, so in practice we use services to provide stable networking and load balancing.
+
+Ingress is a Kubernetes object that manages external HTTP/HTTPS access to services inside the cluster.
+      
+      Host-based routing
+      Path-based routing
+      SSL termination
+      But important:
+      
+      👉 Ingress itself does not handle traffic.
+      👉 It needs an Ingress Controller (like NGINX, AWS ALB, Traefik).
+
+### 32. ConfigMAps vs Secrets
+
+      ConfigMaps store non-sensitive configuration data such as application settings, while Secrets store sensitive information like passwords or tokens. 
+      Both can be injected into pods using environment variables or mounted as volumes, but Secrets are base64 encoded and handled more securely by Kubernetes.
+
+### 33. K8s Cluster components
+
+      The Kubernetes control plane consists of the API server, scheduler, etcd, and controller manager. The API server is the entry point for all cluster communication. etcd stores the cluster state. The scheduler assigns pods to nodes based on resource availability and constraints. The controller manager ensures the desired state of the cluster is maintained. On worker nodes, kubelet manages pod execution, kube-proxy handles networking, and the container runtime runs containers.
+ 
+ ### 34. HPA? VPA
+
+      HPA automatically scales pods based on metrics like CPU, memory, or custom metrics. It requires metrics-server to collect resource usage from kubelets. The HPA controller then compares the metrics with the configured threshold and increases or decreases the number of pod replicas accordingly. For event-driven scaling, tools like KEDA can be used.
+      
+      HPA scales the number of pods based on metrics like CPU or memory. 
+      VPA adjusts the resource requests and limits of containers based on usage patterns. VPA typically requires restarting pods to apply new resource values.  
+### 35. INGRESS VS GaTEWAY API VS API GATEWAY
+
+IN Ingress the Infra team + App routing often managed together in the same resource.
+
+Responsibilities: Host-based routing - Path-based routing - SSL termination
+
+Reverse proxy: Gateway API is the next-generation replacement for Ingress.
+
+It separates responsibilities between teams.
+
+Infrastructure Team
+
+      Manages:
+      GatewayClass
+      Gateway
+      
+      Responsibilities: Load balancer -TLS configuration - Network infrastructure
+
+Application Team
+
+      Manages:
+      HTTPRoute
+      TCPRoute
+      GRPCRoute
+      
+      Responsibilities: Service routing - Path rules - Backend services
+      
+API Gateway
+
+      API Gateway is NOT a Kubernetes resource.
+      
+      It is an API management layer.
+      eg:
+      AWS API Gateway
+      Istio Gateway
+      
+      Responsibilities: Authentication - Rate limiting - API versioning -Request transformation - Analytics
+
+### 36. Pod PEnding ?
+
+      When a pod is in Pending state, I first check the pod events using kubectl describe pod. 
+      Then I verify node resources like CPU and memory availability, check node selectors or affinity rules, verify taints and tolerations, and ensure persistent volume claims are successfully bound. Finally, I confirm that nodes are in Ready state and available for scheduling.
+
+### 37. Network Policies?
+
+      NetworkPolicy is used to control network traffic between pods or namespaces in a Kubernetes cluster. 
+      It works like a firewall that defines which pods can communicate with other pods or external services.
+      It is commonly used to isolate workloads and improve security in multi-tenant clusters.
+
+### 38. HAP Doesn;t scale the Pods?
+      
+      If HPA is not scaling, I check the HPA status, verify metrics-server is running, inspect HPA events, 
+      confirm CPU requests are defined in the pod spec, and check whether the cluster has enough node capacity to schedule new pods.
+### 39. Rolling Update VS Recreate Deployment Statergy
+      
+      RollingUpdate updates pods gradually by replacing old pods with new ones without bringing down the entire application, ensuring zero downtime. 
+      Recreate strategy deletes all existing pods first and then creates new pods, which can cause temporary downtime but is useful when applications cannot run multiple versions simultaneously.
+
+ ### 40. count vs for_each in Terraform?
+   
+    count is used to create multiple identical resources using numeric indexing,
+    while for_each is used when resources need unique identifiers and works with maps or sets. 
+    for_each is generally preferred when managing resources with unique names because it provides stable resource addressing.
+    
+### 41. USe case of s3 and dyanmodb table in terraform?
+
+      S3 backend is used to store the Terraform state file remotely so that all team members can share a centralized state. 
+      DynamoDB is used for state locking to prevent multiple users from modifying the state file simultaneously, 
+      ensuring safe and consistent infrastructure changes.
+
+### 42. Purpose of LifeCycle Block in Terraform - pRevent to destory and create before destory and ingnore changes
+
+The lifecycle block in Terraform controls how resources are created, updated, or destroyed.
+
+      prevent_destroy protects critical resources from accidental deletion, 
+      
+      create_before_destroy ensures new resources are created before old ones are removed to reduce downtime, and 
+      
+      ignore_changes allows Terraform to ignore specific attribute changes made outside Terraform.
+      
+### 43 . In Jenkins pipeline, what are the typical stages you implement for deploying a Java application to Kubernetes?
+
+Our Jenkins pipeline includes stages such as
+   
+         code checkout, 
+         application build using Maven, 
+         code quality analysis using SonarQube, 
+         container security scanning using Trivy,
+         Docker image build and push to AWS ECR,and 
+         finally deployment to Kubernetes using kubectl. 
+      
+      The pipeline runs on a Docker-based Jenkins agent to maintain a consistent build environment.
+
+### 44.  During deployment, Jenkins pipeline fails at this stage: kubectl apply -f deployment.yaml. Error:ImagePullBackOff    
+      
+      If I encounter an ImagePullBackOff error, 
+      I first check the pod events using kubectl describe pod to identify the exact issue. 
+      Then I verify the image name and tag in the deployment manifest, ensure the image was successfully pushed to the container registry, and confirm that the Kubernetes cluster has proper authentication to pull the image, such as imagePullSecrets or IAM permissions in EKS.
+      The Worker node has NAT to fetch the regirsty   
+
+ ### 45. If one pod keeps restarting while others are healthy?
+
+      If one pod keeps restarting while others are healthy, I first check the pod logs and events to see if the application is crashing or if the liveness probe is failing. Then I verify resource limits to check for OOMKilled errors. If those are fine, I investigate node-level issues like memory pressure or disk pressure. I also check if any volume mounts or dependencies like databases are causing the container to crash.
