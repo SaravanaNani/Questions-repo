@@ -3,15 +3,20 @@
 ### Self Introduction
 
 
-    “First of all, thank you for giving me this opportunity. My name is Saravana and I have around 2 years of experience as a DevOps        Engineer at Adaequare Info Pvt Ltd.
+    “First of all, thank you for giving me this opportunity. 
+    My name is Saravana and I have around 2 years of experience as a DevOps Engineer at Adaequare Info Pvt Ltd.
     
-    In my role, I worked in both monolithic and microservices environments. I gained hands-on experience in AWS infrastructure              provisioning using Terraform and setting up CI/CD pipelines using Jenkins for Java application deployments.
+    In my role, I worked in both monolithic and microservices environments. 
+    I gained hands-on experience in AWS infrastructure provisioning using Terraform and setting up CI/CD pipelines using Jenkins for Java application deployments.
     
     I also created Docker-based Jenkins agents to ensure consistent build environments and handled build and deployment failures.
     
-    In another project, I assisted a senior DevOps engineer in setting up an EKS cluster, where I configured ingress, TLS, and              monitoring using Prometheus and Grafana. I was also responsible for validating Kubernetes workloads and troubleshooting issues such     as pod crashes and image pull errors.
+    In another project, I assisted a senior DevOps engineer in setting up an EKS cluster,
+    where I configured ingress, TLS, and monitoring using Prometheus and Grafana.
+    I was also responsible for validating Kubernetes workloads and troubleshooting issues such  as pod crashes and image pull errors.
     
-    Recently I have also started learning Google Cloud to improve my multi-cloud skills. Now I am looking for an opportunity where I        can contribute my DevOps knowledge and continue growing technically.
+    Recently I have also started learning Google Cloud to improve my multi-cloud skills. 
+    Now I am looking for an opportunity where I can contribute my DevOps knowledge and continue growing technically.
 ---
 ### What are your strengths and weaknesses?
 
