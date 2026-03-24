@@ -297,8 +297,10 @@ Important Detail You Slightly Missed Rolling update behavior is controlled by:
       In production environments, we typically use LoadBalancer services or an Ingress controller to expose applications more securely and efficiently.
 
 ### 31. Ingress vs Service LB?
-
-      Yes, pods can communicate directly using pod IP because Kubernetes provides flat networking across the cluster. However, pod IPs are ephemeral and change when pods restart, so in practice we use services to provide stable networking and load balancing.
+      
+      A Service of type LoadBalancer exposes a service externally by creating a cloud load balancer and works at Layer 4 with basic routing. Ingress, 
+      on the other hand, is a Layer 7 resource that provides advanced routing like host-based and path-based routing
+      using a single entry point, making it more suitable for production environments.
 
 Ingress is a Kubernetes object that manages external HTTP/HTTPS access to services inside the cluster.
       
@@ -309,6 +311,8 @@ Ingress is a Kubernetes object that manages external HTTP/HTTPS access to servic
       
       👉 Ingress itself does not handle traffic.
       👉 It needs an Ingress Controller (like NGINX, AWS ALB, Traefik).
+
+      
 
 ### 32. ConfigMAps vs Secrets
 
