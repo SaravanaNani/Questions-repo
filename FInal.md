@@ -325,10 +325,16 @@ Ingress is a Kubernetes object that manages external HTTP/HTTPS access to servic
  
  ### 34. HPA? VPA
 
-      HPA automatically scales pods based on metrics like CPU, memory, or custom metrics. It requires metrics-server to collect resource usage from kubelets. The HPA controller then compares the metrics with the configured threshold and increases or decreases the number of pod replicas accordingly. For event-driven scaling, tools like KEDA can be used.
+      HPA automatically scales pods based on metrics like CPU, memory, or custom metrics. 
+      It requires metrics-server to collect resource usage from kubelets.
+      The HPA controller then compares the metrics with the configured threshold and increases or decreases the number of pod replicas accordingly. 
+      For event-driven scaling, tools like KEDA can be used.
       
       HPA scales the number of pods based on metrics like CPU or memory. 
-      VPA adjusts the resource requests and limits of containers based on usage patterns. VPA typically requires restarting pods to apply new resource values.  
+      
+      VPA adjusts the resource requests and limits of containers based on usage patterns. 
+      VPA typically requires restarting pods to apply new resource values.  
+      
 ### 35. INGRESS VS GaTEWAY API VS API GATEWAY
 
 IN Ingress the Infra team + App routing often managed together in the same resource.
