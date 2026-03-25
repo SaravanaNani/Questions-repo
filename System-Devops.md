@@ -232,21 +232,20 @@
 ---
 ### 13. CPU normal, app slow - “No infra issue, still slow”
 
+
     I will debug this step by step.
     
     Since CPU is normal, I will focus on non-CPU bottlenecks.
     
-    First, I will check application logs to identify slow responses, timeouts, or dependency failures.
+    First, I will check application logs to identify slow responses, timeouts, or dependency-related errors.
     
-    Then, I will check dependencies like database performance, including slow queries, locks, or connection limits.
+    Then, I will analyze dependencies such as database performance, including slow queries, locks, or connection limits.
     
     Next, I will check disk I/O using iostat to identify any I/O bottlenecks.
     
-    Then, I will verify network latency between services or external APIs.
+    After that, I will verify network latency to ensure there are no delays in communication between services.
     
-    After that, I will check memory usage to ensure there is no memory pressure or swapping.
-    
-    Finally, I will analyze if the application is waiting on external services or experiencing thread blocking.
+    Finally, I will check memory usage and confirm the application is not waiting on external resources or experiencing thread blocking.
 
 ---
     
