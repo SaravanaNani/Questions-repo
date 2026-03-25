@@ -1,4 +1,4 @@
-### application is deployed in Kubernetes. Pods are Running, but users cannot access the application.
+### 1. Application is deployed in Kubernetes. Pods are Running, but users cannot access the application.
     
     I will debug this step by step starting from logs.
     
@@ -18,7 +18,7 @@
 
 
 ---
-### CarshLoopBackOff
+### 2. CarshLoopBackOff
 
 
     CrashLoopBackOff means the container is repeatedly crashing and Kubernetes is trying to restart it.
@@ -41,7 +41,7 @@
     Finally, I will check resource limits and usage to see if the container is running out of memory.
 
 ---
-### Application is running but suddenly becomes very slow
+### 3. Application is running but suddenly becomes very slow
 
     I will debug this step by step.
     
@@ -60,17 +60,17 @@
     Finally, I will check if there is increased traffic and whether autoscaling is working correctly.
 
 --- 
-### Pod Pending state?
+### 4. Pod Pending state?
 
-
-Pod Pending means the pod is not yet scheduled on any node.
-    Common reasons:
-    - Insufficient CPU or memory resources
-    - Node selector or affinity mismatch
-    - Taints and tolerations issue
-    - PVC not bound
-    - Node not ready
     
+    Pod Pending means the pod is not yet scheduled on any node.
+        Common reasons:
+        - Insufficient CPU or memory resources
+        - Node selector or affinity mismatch
+        - Taints and tolerations issue
+        - PVC not bound
+        - Node not ready
+        
     Debug steps:
     
     First, I will describe the pod using kubectl describe pod to check events, especially for FailedScheduling messages.
@@ -83,8 +83,8 @@ Pod Pending means the pod is not yet scheduled on any node.
     
     Finally, I will check if any persistent volume claim is in pending state.
     
-
-### Your application is working internally, - but it is not accessible externally
+---
+### 5. Your application is working internally, - but it is not accessible externally
 
     I will debug this step by step.
     
@@ -104,8 +104,8 @@ Pod Pending means the pod is not yet scheduled on any node.
     
     Finally, I will check network configurations like security groups, firewall rules, and open ports to ensure traffic is allowed.
 
-
-### Pods running, but inter-service communication failing
+---
+### 6. Pods running, but inter-service communication failing
 
     
     I will debug this step by step.
@@ -123,8 +123,8 @@ Pod Pending means the pod is not yet scheduled on any node.
     Next, I will check if any network policies are blocking communication.
     
     Finally, I will verify that the application is listening on the correct port.
-
-### Docker Container is Running -APP is not responding
+---
+### 7. Docker Container is Running -APP is not responding
 
  
     I will debug this step by step.
@@ -138,8 +138,8 @@ Pod Pending means the pod is not yet scheduled on any node.
     Then, I will verify port mapping between container and host to ensure the port is exposed correctly.
     
     After that, I will test connectivity using curl from inside the container and from the host.
-
-### EC2 instance CPU is 100% and application is down
+---
+### 8. EC2 instance CPU is 100% and application is down
 
     I will debug this step by step.
     
@@ -160,8 +160,8 @@ Pod Pending means the pod is not yet scheduled on any node.
     Next, I will check if the application is bound to 0.0.0.0 and not just localhost.
     
     Finally, I will verify network configuration such as bridge or host mode and ensure no firewall is blocking access.
-
-### Jenkins pipeline failed while pushing Docker image to ECR
+---
+### 9. Jenkins pipeline failed while pushing Docker image to ECR
 
 
     I will debug this step by step.
@@ -179,8 +179,8 @@ Pod Pending means the pod is not yet scheduled on any node.
     After that, I will check network connectivity from Jenkins to ECR.
     
     Finally, I will ensure there are no issues with Docker daemon or disk space on the Jenkins node.
-
-### RDS database is slow in production
+---
+### 10. RDS database is slow in production
     
     I will debug this step by step.
     
@@ -195,13 +195,91 @@ Pod Pending means the pod is not yet scheduled on any node.
     After that, I will check for I/O bottlenecks or storage limitations.
     
     Finally, I will optimize queries, add indexes, use caching like Redis, or scale the RDS instance if required.
+---
+### 11. No logs, app down - “Application is down but logs show nothing — what will you do?”
+    
+    I will debug this step by step.
+    
+    Since there are no logs, I suspect the application is not starting or failing before logging.
+    
+    First, I will check if the application process is running using ps or systemctl.
+    
+    If the process is not running, I will check startup issues like configuration errors, environment variables, or missing dependencies.
+    
+    If the process is running, I will check if the application is listening on the expected port using netstat.
+    
+    Then, I will test local connectivity using curl to verify if the application is responding.
+    
+    If it is not responding, I will check for port conflicts or binding issues.
+    
+    Finally, if the application is running but still not accessible, I will move to service, network, and infrastructure checks.
+---
+### 12. Intermittent issue - “App works sometimes, fails sometimes”
+    
+    I will debug this step by step.
+    
+    First, I will check application logs to identify patterns of failure, such as timeouts or errors.
+    
+    Then, I will check if the issue correlates with specific times or traffic spikes.
+    
+    Next, I will analyze resource usage like CPU, memory, and load to identify spikes or leaks.
+    
+    Then, I will check dependencies such as database or external APIs for latency or connection limits.
+    
+    After that, I will verify network stability and latency between services.
+    
+    Finally, I will check if autoscaling is configured properly to handle traffic fluctuations.
+---
+### 13. CPU normal, app slow - “No infra issue, still slow”
 
-### 1. No logs, app down - “Application is down but logs show nothing — what will you do?”
+    I will debug this step by step.
+    
+    Since CPU is normal, I will focus on non-CPU bottlenecks.
+    
+    First, I will check application logs to identify slow responses, timeouts, or dependency failures.
+    
+    Then, I will check dependencies like database performance, including slow queries, locks, or connection limits.
+    
+    Next, I will check disk I/O using iostat to identify any I/O bottlenecks.
+    
+    Then, I will verify network latency between services or external APIs.
+    
+    After that, I will check memory usage to ensure there is no memory pressure or swapping.
+    
+    Finally, I will analyze if the application is waiting on external services or experiencing thread blocking.
 
-### 2. Intermittent issue - “App works sometimes, fails sometimes”
+---
+    
+### 14. After deployment issue - “App broke after new release”
 
-### 3. CPU normal, app slow - “No infra issue, still slow”
+    I will debug this step by step.
+    
+    Since the issue occurred after a new deployment, I will first suspect changes in the new release.
+    
+    First, I will check application logs to identify errors introduced in the new version.
+    
+    Then, I will compare the new deployment with the previous working version to identify changes in code, configuration, or environment variables.
+    
+    If the issue is critical, I will immediately roll back to the previous stable version to restore service.
+    
+    Next, I will test the new version in a staging or test environment to reproduce the issue.
+    
+    Then, I will check for configuration issues, dependency mismatches, or resource limits introduced in the new deployment.
+    
+    Finally, I will fix the root cause and redeploy safely.
 
-### 4. After deployment issue - “App broke after new release”
+---
+### 15. Node failure - “Kubernetes node goes down — what happens?”    
 
-### 5. Node failure - “Kubernetes node goes down — what happens?”    
+        When a Kubernetes node goes down, the node becomes NotReady.
+        
+        After a grace period, Kubernetes marks the pods on that node as failed.
+        
+        For stateless applications managed by Deployment or ReplicaSet, pods are automatically rescheduled on other healthy nodes.
+        
+        For stateful applications using StatefulSet, pods are also recreated on another node, and volumes like EBS are detached and reattached, which may cause some downtime.
+        
+        If pods are using node-specific storage like hostPath, they cannot be rescheduled until the node recovers.
+        
+        Overall, Kubernetes ensures availability by rescheduling pods on healthy nodes, but recovery time depends on workload type and storage configuration.
+---
