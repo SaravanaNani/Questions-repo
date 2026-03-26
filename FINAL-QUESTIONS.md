@@ -189,3 +189,61 @@ How will you troubleshoot?
 76. Difference between **S3 vs EBS vs EFS**?
 
 77. Difference between **Security Group vs Network ACL**?
+
+# DevOps Scenario Interview Questions (Final Set)
+
+## 🔹 Core 10
+
+1. Your Kubernetes application is running, but users cannot access it. How will you debug?
+
+2. A pod is in CrashLoopBackOff. What does it mean and how will you debug it?
+
+3. Your application suddenly becomes very slow. How will you troubleshoot?
+
+4. A pod is stuck in Pending state. What could be the reasons and how will you debug?
+
+5. Your application works internally but is not accessible externally. What will you check?
+
+6. Kubernetes pods are running, but inter-service communication is failing. How will you debug?
+
+7. Your Docker container is running, but the application is not responding. What will you check?
+
+8. EC2 instance CPU is 100% and the application is down. How will you troubleshoot?
+
+9. Jenkins pipeline fails while pushing Docker image to ECR. What will you check?
+
+10. RDS database is slow in production. How will you troubleshoot?
+
+---
+
+## 🔹 Advanced 5 (SRE / Product Level)
+
+11. Application is down but logs show nothing. What will you do?
+
+12. Application works sometimes and fails sometimes (intermittent issue). How will you debug?
+
+13. CPU is normal, but the application is still slow. What will you check?
+
+14. Application broke after a new deployment. How will you handle it?
+
+15. Kubernetes node goes down. What happens and how does the system recover?
+
+---
+
+## 🔹 System Design / Thinking 5
+
+16. App is slow, CPU normal, logs normal — what next?
+
+17. How will you debug a system without access to logs?
+
+18. How do you design zero downtime deployment?
+
+19. How do you handle traffic spikes?
+
+20. How do you debug a memory leak?
+
+---
+
+## 🔥 Debugging Golden Rule
+
+    Logs → Process → Service → Network → Dependency → Infrastructure
