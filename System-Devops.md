@@ -1,3 +1,39 @@
+# Universal Debug Template :
+
+### Monlythic Debug 
+---
+Logs -> Process (laod avg , cpu, bottle neck) -> Port(conflicts) -> DB (Dependency ) Autheniction
+
+---
+
+### Microservices Debug [Trace] 
+---
+pod Logs -> pod Events -> Services/ Endpoints -> Ingress - N/W SG -> Depedency -> Infra (Nodes CPU etc)
+
+---
+
+Metrics → WHAT is wrong - USed for Monitoring and Alrets
+
+    Memory: 70%
+    Latency: 200ms
+    Requests/sec: 500
+  
+Logs → WHY it is wrong  - Used for exact errors and Debugging 
+    
+    ERROR: DB connection failed
+    Timeout while calling API
+
+    Appplication Error - Port used | config issues
+    Dependency Error - DB connection refuesed | API TIme Out | Authenticatio failed
+    Resource Error - OOM Error | Disk Full | To Many connections
+    
+
+Traces → WHERE it is wrong - Used for Where delay happened - Microservices debugging
+     
+    User request → API → Service A → DB → Response
+
+---
+
 ### 1. Application is deployed in Kubernetes. Pods are Running, but users cannot access the application.
     
     I will debug this step by step starting from logs.
@@ -282,3 +318,57 @@
         
         Overall, Kubernetes ensures availability by rescheduling pods on healthy nodes, but recovery time depends on workload type and storage configuration.
 ---
+
+### 16. App is slow, CPU and Logs are Normal, whats next ?
+    
+    I will debug this step by step.
+    
+    Since CPU and logs are normal, I suspect the application is waiting on external resources.
+    
+    First, I will check database performance, including slow queries, locks, and connection limits.
+    
+    Then, I will check network latency between services or external APIs.
+    
+    Next, I will check disk I/O to identify any I/O bottlenecks.
+    
+    After that, I will check memory usage and ensure there is no swapping or memory pressure.
+    
+    Finally, I will analyze thread dumps to see if the application threads are blocked or waiting on resources.
+
+---  
+
+### 17. How will you debug without access to logs? 
+
+    I will debug this step by step.
+    
+    Since logs are not available, I will rely on metrics and system behavior.
+    
+    First, I will check application health using load balancer health checks.
+    
+    Then, I will analyze metrics from CloudWatch or Grafana such as CPU, memory, latency, and error rates.
+    
+    Next, I will check resource usage on the server or pod to identify any bottlenecks.
+    
+    Then, I will test connectivity using curl or API endpoints to verify response behavior.
+    
+    After that, I will check dependencies like database or external APIs using monitoring metrics.
+    
+    Finally, I will check infrastructure signals like node health, scaling events, and network issues.
+
+### 18. How do you design zero downtime deployment?
+
+        I will ensure zero downtime using controlled deployment strategies.
+        
+        In AWS/monolithic setup:
+        - Deploy application across multiple AZs behind a Load Balancer
+        - Use health checks to route traffic only to healthy instances
+        - Use blue-green or canary deployment to shift traffic gradually
+        
+        In Kubernetes:
+        - Use rolling updates with maxUnavailable and maxSurge
+        - Configure readiness probes so traffic goes only to ready pods
+        - Ensure multiple replicas for high availability
+        
+        This ensures no downtime during deployment.
+
+### 19. 
