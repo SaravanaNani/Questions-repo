@@ -33,6 +33,47 @@ Traces → WHERE it is wrong - Used for Where delay happened - Microservices deb
     User request → API → Service A → DB → Response
 
 ---
+What is Latency?
+
+    You click login
+    Response comes in 100ms → fast ✅
+    Response comes in 2 seconds → slow ❌
+    
+    👉 That delay = latency
+---
+
+2. What is Rate Limiting?
+
+
+        Limit how many requests a user can send
+        Rate limiting protects the system by restricting excessive requests.
+   
+        🧪 Example
+        Max 100 requests per minute per user
+        
+        👉 Prevents: Overload and Attacks
+
+---
+3.  What is memeory Leak?
+
+        Application keeps using memory but never releases it
+        
+        🧪 Example
+        App starts → uses 200MB
+        After 1 hour → 500MB
+        After 2 hours → 1GB ❌
+        
+        👉 Memory keeps increasing = memory leak
+        
+        🔥 Why it happens
+        - Objects not cleared
+        - Unclosed DB connections
+        - Cache not cleaned
+        - Infinite data growth
+        ⚠️ What happens
+        Memory full → system slows → crash → restart
+
+---   
 
 ### 1. Application is deployed in Kubernetes. Pods are Running, but users cannot access the application.
     
@@ -371,4 +412,31 @@ Traces → WHERE it is wrong - Used for Where delay happened - Microservices deb
         
         This ensures no downtime during deployment.
 
-### 19. 
+### 19. How do you handle traffic spike?
+
+        
+        I will handle traffic spikes using scaling and traffic distribution.
+        
+        First, I will monitor metrics like request rate and latency.
+        
+        Then, I will use Auto Scaling Groups or Kubernetes HPA to scale the application horizontally.
+        
+        Next, I will distribute traffic using a Load Balancer across multiple instances or pods.
+        
+        After that, I will use caching (like Redis or CDN) to reduce load on the application and database.
+        
+        Finally, I will implement rate limiting to protect the system from overload.
+
+### 20. How do you debug a memory leak?
+    
+    I will debug this step by step.
+    
+    First, I will monitor memory usage over time to identify if it is continuously increasing.
+    
+    Then, I will check application logs for memory-related errors.
+    
+    Next, I will analyze whether the application is not releasing resources like connections or objects.
+    
+    Then, I will check for restart patterns, such as frequent OOMKilled events.
+    
+    Finally, I will optimize the application or restart the service temporarily to recover.
