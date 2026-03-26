@@ -277,3 +277,260 @@ What is Latency?
         Memory full → system slows → crash → restart
 
 --- 
+# DevOps Scenario Interview Questions (Final Set)
+
+## 🔹 Core 10
+
+1. Your Kubernetes application is running, but users cannot access it. How will you debug?
+
+2. A pod is in CrashLoopBackOff. What does it mean and how will you debug it?
+
+3. Your application suddenly becomes very slow. How will you troubleshoot?
+
+4. A pod is stuck in Pending state. What could be the reasons and how will you debug?
+
+5. Your application works internally but is not accessible externally. What will you check?
+
+6. Kubernetes pods are running, but inter-service communication is failing. How will you debug?
+
+7. Your Docker container is running, but the application is not responding. What will you check?
+
+8. EC2 instance CPU is 100% and the application is down. How will you troubleshoot?
+
+9. Jenkins pipeline fails while pushing Docker image to ECR. What will you check?
+
+10. RDS database is slow in production. How will you troubleshoot?
+
+---
+
+## 🔹 Advanced 5 (SRE / Product Level)
+
+11. Application is down but logs show nothing. What will you do?
+
+12. Application works sometimes and fails sometimes (intermittent issue). How will you debug?
+
+13. CPU is normal, but the application is still slow. What will you check?
+
+14. Application broke after a new deployment. How will you handle it?
+
+15. Kubernetes node goes down. What happens and how does the system recover?
+
+---
+
+## 🔹 System Design / Thinking 5
+
+16. App is slow, CPU normal, logs normal — what next?
+
+17. How will you debug a system without access to logs?
+
+18. How do you design zero downtime deployment?
+
+19. How do you handle traffic spikes?
+
+20. How do you debug a memory leak?
+
+---
+# DevOps Debugging Cheat Sheet (Focus Points)
+
+## 🔹 Core 10
+
+### 1. App not accessible (pods running)
+Focus:
+- Service (type, ports)
+- Endpoints
+- Ingress
+- Network (SG/firewall)
+- Internal vs external curl
+
+---
+
+### 2. CrashLoopBackOff
+Focus:
+- Logs
+- OOMKilled
+- Liveness/Readiness probes
+- Config (env, secrets)
+
+---
+
+### 3. App slow
+Focus:
+- Logs
+- DB (slow queries, connections)
+- CPU / Memory
+- I/O
+- Network latency
+
+---
+
+### 4. Pod Pending
+Focus:
+- FailedScheduling
+- Resources (CPU/memory)
+- Taints/Tolerations
+- Node affinity
+- PVC
+
+---
+
+### 5. Internal works, external fails
+Focus:
+- Service type (NodePort/LB)
+- External IP
+- Ingress
+- Security groups
+
+---
+
+### 6. Inter-service communication fails
+Focus:
+- DNS (nslookup)
+- Service + Endpoints
+- curl (connectivity)
+- NetworkPolicy
+- Port listening
+
+---
+
+### 7. Docker running, app not responding
+Focus:
+- docker logs
+- Process
+- netstat (port)
+- Port mapping
+- Binding (0.0.0.0)
+
+---
+
+### 8. EC2 CPU 100%
+Focus:
+- top / ps
+- Load average
+- Identify process
+- Logs
+- Scale (ASG)
+
+---
+
+### 9. Jenkins → ECR fail
+Focus:
+- Logs
+- IAM permissions
+- docker login
+- Repo exists
+- Network
+
+---
+
+### 10. RDS slow
+Focus:
+- App logs (slow queries)
+- CloudWatch metrics
+- Connections
+- Locks
+- I/O
+- Indexing
+
+---
+
+## 🔹 Advanced 5
+
+### 11. No logs, app down
+Focus:
+- Process
+- Port (netstat)
+- curl
+- Config/startup
+- Infra
+
+---
+
+### 12. Intermittent issue
+Focus:
+- Pattern (time-based)
+- Logs
+- CPU/memory spikes
+- DB / API
+- Network
+
+---
+
+### 13. CPU normal, app slow
+Focus:
+- DB (locks, queries)
+- I/O
+- Network latency
+- Memory
+- Thread blocking
+
+---
+
+### 14. After deployment issue
+Focus:
+- What changed?
+- Logs
+- Rollback
+- Config differences
+- Test env
+
+---
+
+### 15. Node failure
+Focus:
+- Node NotReady
+- Pod reschedule
+- Stateful vs stateless
+- Volume attach
+
+---
+
+## 🔹 System Design 5
+
+### 16. Slow app, CPU/logs normal
+Focus:
+- DB
+- Network
+- Thread blocking
+- I/O
+
+---
+
+### 17. No logs debugging
+Focus:
+- Metrics
+- Health checks
+- curl
+- Infra signals
+
+---
+
+### 18. Zero downtime deployment
+Focus:
+- Rolling update
+- Readiness probe
+- Load balancer
+- Multi-AZ
+
+---
+
+### 19. Traffic spike
+Focus:
+- Autoscaling (ASG/HPA)
+- Load balancer
+- Caching
+- Rate limiting
+
+---
+
+### 20. Memory leak
+Focus:
+- Memory increase over time
+- OOMKilled
+- Logs
+- Restart pattern
+
+---
+
+## 🔥 Golden Rule
+    
+    Logs → Process → Service → Network → Dependency → Infrastructure
