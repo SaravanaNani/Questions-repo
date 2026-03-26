@@ -1,13 +1,116 @@
 # Universal Debug Template :
+    
+    1. Is app running? (Process / Pod)
+    
+    2. Is it reachable internally? (curl)
+    
+    3. Is it exposed? (Service / Port / LB)
+    
+    4. Are dependencies working? (DB / API)
+    
+    5. Any infra issue? (CPU / Memory / Network)
+
+
 
 ### Monlythic Debug 
 ---
-Logs -> Process (laod avg , cpu, bottle neck) -> Port(conflicts) -> DB (Dependency ) Autheniction
+
+## WIth out ALB
+
+User → EC2 → App → DB
+
+- App running?
+- Port open?
+- Security group?
+
+Logs -> Process (systemctl, ps -a | grep service name) -> Port Open SG & Binding -> DB (Dependency ) Autheniction -> Infra (laod avg , cpu, bottle neck)
+
+
+## With ALB
+
+User → ALB → Target Group → EC2 (ASG) → App
+
+1. ALB working? is ALB Reachable - curl http://<ALB-DNS>
+
+   ❌ If NOT reachable:
+        
+        DNS issue
+        ALB listener not configured
+        Security group blocking
+
+2. Target group healthy? AWS console -> Healthy / Unhealthy targets
+
+
+3. Health check path correct?
+
+Case 1: ALL targets unhealthy
+
+    👉 Root causes:
+    
+    - Health check path wrong (/health)
+    - App not running
+    - Port mismatch
+    
+    Example
+        
+    Health check = /health
+    App exposes /api
+    
+    👉 Result:
+    
+    Unhealthy ❌
+
+Case 2 - Targets healthy but app not working  
+
+    Check Health Check Config
+    
+    👉 Verify:
+    
+    Path: /health
+    Port: 80 / 8080
+    Protocol: HTTP
+    
+    🔥 Important
+    ALB calls → EC2:PORT/health
+    ❌ If wrong:
+    
+    👉 Fix path/port
+
+4. EC2 app running?
+
+Even with ASG, you STILL check EC2 (important)
+    
+    curl localhost:PORT
+    netstat -tulnp
+    systemctl status app
+
+    ❌ Possible issues:
+    - App not running
+    - Port wrong
+    - App bound to 127.0.0.1
+
+6. Security group?
+
+        👉 Check: ALB → EC2 (port open?)
+                  User → ALB (port open?)
+       ❌ Example:
+            ALB allows 80
+            EC2 blocks 80
+            
+       👉 Result: Traffic blocked ❌
+
+
+
+
+
+
 
 ---
 
 ### Microservices Debug [Trace] 
 ---
+
+
 pod Logs -> pod Events -> Services/ Endpoints -> Ingress - N/W SG -> Depedency -> Infra (Nodes CPU etc)
 
 ---
