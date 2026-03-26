@@ -18,10 +18,10 @@
 ## WIth out ALB
 
 User → EC2 → App → DB
-
-- App running?
-- Port open?
-- Security group?
+    
+    - App running?
+    - Port open?
+    - Security group?
 
 Logs -> Process (systemctl, ps -a | grep service name) -> Port Open SG & Binding -> DB (Dependency ) Autheniction -> Infra (laod avg , cpu, bottle neck)
 
@@ -39,7 +39,6 @@ User → ALB → Target Group → EC2 (ASG) → App
         Security group blocking
 
 2. Target group healthy? AWS console -> Healthy / Unhealthy targets
-
 
 3. Health check path correct?
 
@@ -100,8 +99,82 @@ Even with ASG, you STILL check EC2 (important)
        👉 Result: Traffic blocked ❌
 
 
+---
+### ECS Fargate + ALB (Full Flow)
 
+User → ALB → Target Group → Fargate Task (Container) → App
 
+    ✅ 1. Fargate Task starts
+    
+    👉 AWS automatically:
+    
+    Creates ENI (network interface)
+    Assigns private IP
+    
+    Task → gets private IP automatically
+    
+    ✅ 2. Target Group registers task
+    
+    Target type = Farigate IP  ** 👉 Not instance Type (important!) **
+    
+    ✅ 3. ALB sends traffic
+    
+    ALB → Target Group → Task IP:PORT
+    
+    🧪 Health Check Flow
+    
+    ALB → /health → Task IP:8080
+
+    🔥 Important - Same as EC2:
+    
+    Path = /health
+    Port = container port (e.g., 8080)
+
+🧠 Security Groups in Fargate
+
+        🔹 ALB SG
+        Inbound: 0.0.0.0/0 → 80/443
+        🔹 Fargate Task SG
+        Inbound: Source = ALB SG
+        Port = 8080
+        
+        🎯 Same concept as EC2!
+        ALB → allowed
+        Others → blocked
+        
+❗ Important Differences
+    
+    🔥 1. No EC2
+    So: No SSH ❌No netstat ❌
+
+    🔥 2. Debugging changes
+    
+    👉 You check:
+    
+    - Container logs (CloudWatch)
+    - Task status
+    - Health check
+    - SG
+
+    
+🧠 Debug Flow (Fargate)
+        
+        1. ALB reachable?
+        2. Target group healthy?
+        3. Health check path correct?
+        4. Task running?
+        5. Logs (CloudWatch)
+        6. SG correct?
+        
+🧪 Real Issue Example
+
+    ❌ Problem
+    
+    Targets unhealthy
+    
+    Root cause: Health check path wrong (/health vs /api)
+    
+    Fix: Update target group health check path
 
 
 
@@ -110,6 +183,34 @@ Even with ASG, you STILL check EC2 (important)
 ### Microservices Debug [Trace] 
 ---
 
+User → Ingress → Service → Pod → DB
+
+Step 1: App running?
+
+    EC2 → systemctl status
+    K8s → kubectl get pods
+
+Step 2: Internal works?
+
+    curl localhost:8080
+    ❌ Not working → app issue
+    ✅ Working → go next
+
+Step 3: External works?
+    
+    EC2 → port open?
+    K8s → service/ingress
+
+Step 4: Dependency?
+
+    DB slow?
+    API down?
+
+Step 5: Infra?
+    
+    CPU
+    Memory
+    Network
 
 pod Logs -> pod Events -> Services/ Endpoints -> Ingress - N/W SG -> Depedency -> Infra (Nodes CPU etc)
 
@@ -117,8 +218,7 @@ pod Logs -> pod Events -> Services/ Endpoints -> Ingress - N/W SG -> Depedency -
 
 Metrics → WHAT is wrong - USed for Monitoring and Alrets
 
-    Memory: 70%
-    Latency: 200ms
+    Memory: 70%    Latency: 200ms
     Requests/sec: 500
   
 Logs → WHY it is wrong  - Used for exact errors and Debugging 
