@@ -277,260 +277,380 @@ What is Latency?
         Memory full → system slows → crash → restart
 
 --- 
-# DevOps Scenario Interview Questions (Final Set)
-
-## 🔹 Core 10
-
-1. Your Kubernetes application is running, but users cannot access it. How will you debug?
-
-2. A pod is in CrashLoopBackOff. What does it mean and how will you debug it?
-
-3. Your application suddenly becomes very slow. How will you troubleshoot?
-
-4. A pod is stuck in Pending state. What could be the reasons and how will you debug?
-
-5. Your application works internally but is not accessible externally. What will you check?
-
-6. Kubernetes pods are running, but inter-service communication is failing. How will you debug?
-
-7. Your Docker container is running, but the application is not responding. What will you check?
-
-8. EC2 instance CPU is 100% and the application is down. How will you troubleshoot?
-
-9. Jenkins pipeline fails while pushing Docker image to ECR. What will you check?
-
-10. RDS database is slow in production. How will you troubleshoot?
+# DevOps Interview Answers (1–35) — Speaking Format
 
 ---
 
-## 🔹 Advanced 5 (SRE / Product Level)
+## 1. Kubernetes app running but not accessible
 
-11. Application is down but logs show nothing. What will you do?
+If the app is running but not accessible, I check service exposure.
 
-12. Application works sometimes and fails sometimes (intermittent issue). How will you debug?
-
-13. CPU is normal, but the application is still slow. What will you check?
-
-14. Application broke after a new deployment. How will you handle it?
-
-15. Kubernetes node goes down. What happens and how does the system recover?
+* Verify Service type (ClusterIP/NodePort/LoadBalancer)
+* Check labels & selectors
+* Check endpoints
+* Verify Ingress rules
+* Check pod logs and ports
 
 ---
 
-## 🔹 System Design / Thinking 5
+## 2. CrashLoopBackOff
 
-16. App is slow, CPU normal, logs normal — what next?
+CrashLoopBackOff means the container is repeatedly failing.
 
-17. How will you debug a system without access to logs?
-
-18. How do you design zero downtime deployment?
-
-19. How do you handle traffic spikes?
-
-20. How do you debug a memory leak?
-
----
-# DevOps Debugging Cheat Sheet (Focus Points)
-
-## 🔹 Core 10
-
-### 1. App not accessible (pods running)
-Focus:
-- Service (type, ports)
-- Endpoints
-- Ingress
-- Network (SG/firewall)
-- Internal vs external curl
+* Check logs
+* Describe pod
+* Verify env variables
+* Check dependencies
+* Fix root cause
 
 ---
 
-### 2. CrashLoopBackOff
-Focus:
-- Logs
-- OOMKilled
-- Liveness/Readiness probes
-- Config (env, secrets)
+## 3. Application slow
+
+If app is slow, I check performance bottlenecks.
+
+* CPU, memory, disk usage
+* Application logs
+* DB performance
+* Network latency
+* Scale if needed
 
 ---
 
-### 3. App slow
-Focus:
-- Logs
-- DB (slow queries, connections)
-- CPU / Memory
-- I/O
-- Network latency
+## 4. Pod stuck in Pending
+
+Pending means scheduler can’t place pod.
+
+* Resource shortage
+* Node issues
+* PVC problems
+* Taints/tolerations
+* Scheduler logs
 
 ---
 
-### 4. Pod Pending
-Focus:
-- FailedScheduling
-- Resources (CPU/memory)
-- Taints/Tolerations
-- Node affinity
-- PVC
+## 5. Internal works but external not
+
+This is usually exposure issue.
+
+* Service type
+* Ingress config
+* Security groups
+* DNS mapping
 
 ---
 
-### 5. Internal works, external fails
-Focus:
-- Service type (NodePort/LB)
-- External IP
-- Ingress
-- Security groups
+## 6. Inter-service communication fails
+
+This is mostly networking issue.
+
+* Service DNS
+* Ports
+* Network policies
+* Logs
 
 ---
 
-### 6. Inter-service communication fails
-Focus:
-- DNS (nslookup)
-- Service + Endpoints
-- curl (connectivity)
-- NetworkPolicy
-- Port listening
+## 7. Docker container running but app not responding
+
+Container is up but app isn’t reachable.
+
+* Check logs
+* Verify port binding
+* Check process
+* Curl inside container
 
 ---
 
-### 7. Docker running, app not responding
-Focus:
-- docker logs
-- Process
-- netstat (port)
-- Port mapping
-- Binding (0.0.0.0)
+## 8. EC2 CPU 100%
+
+High CPU impacts app availability.
+
+* Identify process
+* Check logs
+* Restart if needed
+* Scale instances
+* Optimize app
 
 ---
 
-### 8. EC2 CPU 100%
-Focus:
-- top / ps
-- Load average
-- Identify process
-- Logs
-- Scale (ASG)
+## 9. Jenkins push to ECR fails
+
+This is usually auth issue.
+
+* IAM permissions
+* ECR login
+* Repo existence
+* Network
 
 ---
 
-### 9. Jenkins → ECR fail
-Focus:
-- Logs
-- IAM permissions
-- docker login
-- Repo exists
-- Network
+## 10. RDS slow
+
+Database slowness impacts app.
+
+* Slow queries
+* CPU/memory
+* Connections
+* Indexing
+* Scaling
 
 ---
 
-### 10. RDS slow
-Focus:
-- App logs (slow queries)
-- CloudWatch metrics
-- Connections
-- Locks
-- I/O
-- Indexing
+## 11. No logs but app down
+
+Then I check infra level.
+
+* Monitoring tools
+* CPU/memory
+* Network
+* Enable logging
 
 ---
 
-## 🔹 Advanced 5
+## 12. Intermittent issue
 
-### 11. No logs, app down
-Focus:
-- Process
-- Port (netstat)
-- curl
-- Config/startup
-- Infra
+These require pattern analysis.
 
----
-
-### 12. Intermittent issue
-Focus:
-- Pattern (time-based)
-- Logs
-- CPU/memory spikes
-- DB / API
-- Network
+* Logs over time
+* Traffic spikes
+* Network issues
+* Resource usage
 
 ---
 
-### 13. CPU normal, app slow
-Focus:
-- DB (locks, queries)
-- I/O
-- Network latency
-- Memory
-- Thread blocking
+## 13. CPU normal but slow
+
+Then bottleneck is elsewhere.
+
+* DB latency
+* Memory issues
+* Network
+* Thread blocking
 
 ---
 
-### 14. After deployment issue
-Focus:
-- What changed?
-- Logs
-- Rollback
-- Config differences
-- Test env
+## 14. Zero downtime deployment
+
+Used to avoid service interruption.
+
+* Rolling deployment
+* Blue-green
+* Canary
+* Health checks
 
 ---
 
-### 15. Node failure
-Focus:
-- Node NotReady
-- Pod reschedule
-- Stateful vs stateless
-- Volume attach
+## 15. Traffic spikes
+
+Handled using scaling and optimization.
+
+* Auto Scaling / HPA
+* Caching (Redis)
+* CDN
+* Rate limiting
+* Load testing
 
 ---
 
-## 🔹 System Design 5
+## 16. Memory leak
 
-### 16. Slow app, CPU/logs normal
-Focus:
-- DB
-- Network
-- Thread blocking
-- I/O
+Requires deep analysis.
 
----
-
-### 17. No logs debugging
-Focus:
-- Metrics
-- Health checks
-- curl
-- Infra signals
+* Monitor memory
+* Heap dump
+* Profiling tools
+* GC logs
+* Fix retention
 
 ---
 
-### 18. Zero downtime deployment
-Focus:
-- Rolling update
-- Readiness probe
-- Load balancer
-- Multi-AZ
+## 17. ALB 502 error
+
+Indicates backend failure.
+
+* Target health
+* Port mismatch
+* Logs
+* Timeout
+* Service response
 
 ---
 
-### 19. Traffic spike
-Focus:
-- Autoscaling (ASG/HPA)
-- Load balancer
-- Caching
-- Rate limiting
+## 18. ECS unhealthy targets
+
+Health/config issue.
+
+* Health check path
+* Port mapping
+* Logs
+* App binding
+* Security groups
 
 ---
 
-### 20. Memory leak
-Focus:
-- Memory increase over time
-- OOMKilled
-- Logs
-- Restart pattern
+## 19. ALB vs Target Group vs Listener
+
+They handle traffic routing.
+
+* ALB: entry point
+* Listener: port + rules
+* Target Group: backend + health
 
 ---
 
-## 🔥 Golden Rule
-    
-    Logs → Process → Service → Network → Dependency → Infrastructure
+## 20. ALB health check
+
+Ensures backend availability.
+
+* Path & port
+* Interval/timeout
+* Thresholds
+* Routes to healthy only
+
+---
+
+## 21. Wrong health check path
+
+Causes all targets to fail.
+
+* Targets unhealthy
+* No routing
+* 503 error
+
+---
+
+## 22. Security Group vs NACL
+
+Both control network access.
+
+* SG: instance level, stateful, allow only
+* NACL: subnet level, stateless, allow/deny
+
+---
+
+## 23. ASG with ALB
+
+Ensures scaling and availability.
+
+* Launch instances
+* Register to target group
+* Scaling policies
+* Replace unhealthy
+
+---
+
+## 24. EC2 fails in ASG
+
+ASG maintains desired state.
+
+* Detect failure
+* Terminate instance
+* Launch new instance
+
+---
+
+## 25. ECS Task vs Task Definition vs Service
+
+Defines ECS structure.
+
+* Task Definition: blueprint
+* Task: running container
+* Service: maintains tasks
+
+---
+
+## 26. ECS self-healing
+
+Ensures availability.
+
+* Monitors tasks
+* Replaces failed
+* Maintains count
+
+---
+
+## 27. EC2 vs Fargate
+
+Execution models differ.
+
+* EC2: manage servers
+* Fargate: serverless
+
+---
+
+## 28. Target type
+
+Defines routing type.
+
+* Instance: EC2
+* IP: container/pod
+
+---
+
+## 29. ALB → ECS routing
+
+Traffic flow.
+
+* ALB → Target Group → Tasks
+
+---
+
+## 30. Wrong container port
+
+Breaks routing.
+
+* Health check fails
+* Targets unhealthy
+* No traffic
+
+---
+
+## 31. 502 vs 503
+
+Different failure types.
+
+* 502: backend error
+* 503: no healthy targets
+
+---
+
+## 32. Debug ALB ↔ EC2 network
+
+Check connectivity.
+
+* Security groups
+* NACL
+* Port listening
+* Curl test
+
+---
+
+## 33. Reverse proxy
+
+Handles backend routing.
+
+* Server forwards requests
+* Example: ALB, Nginx
+
+---
+
+## 34. Forward proxy
+
+Client-side proxy.
+
+* Client → proxy → internet
+* Used for filtering
+
+---
+
+## 35. Internal works not external
+
+Usually exposure issue.
+
+* Security groups
+* ALB/Ingress
+* DNS
+* Firewall
+
+---
