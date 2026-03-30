@@ -462,7 +462,8 @@ Requires deep analysis.
 * Profiling tools
 * GC logs
 * Fix retention
-
+Memory leak is when an application keeps consuming memory without releasing it, causing usage to grow over time and eventually crash.
+I will monitor memory usage trend, check logs and OOMKilled events, and fix by optimizing code or increasing limits temporarily.
 ---
 
 ## 17. ALB 502 error
