@@ -3,21 +3,26 @@
 ### Self Introduction
 
 
-    “First of all, thank you for giving me this opportunity. 
-    My name is Saravana and I have around 2 years of experience as a DevOps Engineer at Adaequare Info Pvt Ltd.
-    
-    In my role, I worked in both monolithic and microservices environments. 
-    I gained hands-on experience in AWS infrastructure provisioning using Terraform and setting up CI/CD pipelines using Jenkins for Java application deployments.
-    
-    I also created Docker-based Jenkins agents to ensure consistent build environments and handled build and deployment failures.
-    
-    In another project, I assisted a senior DevOps engineer in setting up an EKS cluster,
-    where I configured ingress, TLS, and monitoring using Prometheus and Grafana.
-    I was also responsible for validating Kubernetes workloads and troubleshooting issues such  as pod crashes and image pull errors.
-    
-    Recently I have also started learning Google Cloud to improve my multi-cloud skills. 
-    Now I am looking for an opportunity where I can contribute my DevOps knowledge and continue growing technically.
+    Hi, thank you for the opportunity.
+    Myself Saravana, and I have around 2 years of experience as a DevOps Engineer.
+    In my previous role at Rediffo Private Limited, I worked on both monolithic and microservices-based environments.
+    On the monolithic side, I was involved in AWS infrastructure provisioning using Terraform, where I created resources like EC2, VPC, and security groups.
+    I also built CI/CD pipelines for Java applications using Jenkins and created Docker-based Jenkins agents for consistent build environments. 
+    Additionally, I assisted in troubleshooting build and deployment issues.
+    On the microservices side, I worked with Kubernetes in EKS, where I helped in cluster setup, configured Ingress and TLS, and supported monitoring setup using Prometheus, Grafana, and Loki. 
+    I also worked on troubleshooting issues like CrashLoopBackOff and ImagePullBackOff in dev and QA environments.
+    I have also gained hands-on exposure to GCP, where I completed a multi-cloud project by deploying a Node.js application across AWS and GCP using Terraform and GitLab CI.
+    Currently, I am looking for an opportunity where I can further enhance my skills in DevOps, especially in microservices and cloud-native environments.
+
 ---
+ ### multi cloud 
+
+     worked on a multi-cloud DevOps project where the goal was to deploy applications across AWS and GCP with automation and scalability. 
+     On AWS, I used ECS Fargate with ALB, and on GCP, I used Managed Instance Groups with Load Balancer. The infrastructure and deployments were automated using Terraform and GitLab CI/CD. 
+     In AWS, deployments are handled by updating ECS services with new Docker images, ensuring zero downtime. In GCP, rolling updates in MIG are used to replace instances gradually.
+     For security, I implemented OIDC-based authentication in GCP to avoid storing credentials.
+     Overall, the system ensures scalable, secure, and zero-downtime deployment
+        ---
 ### What are your strengths and weaknesses?
 
     ✅ Strengths (Simple & Strong):
