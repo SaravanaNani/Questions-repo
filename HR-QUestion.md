@@ -22,7 +22,28 @@
      In AWS, deployments are handled by updating ECS services with new Docker images, ensuring zero downtime. In GCP, rolling updates in MIG are used to replace instances gradually.
      For security, I implemented OIDC-based authentication in GCP to avoid storing credentials.
      Overall, the system ensures scalable, secure, and zero-downtime deployment
-        ---
+---
+### EKS Project
+
+    In our setup, we used AWS EKS as the Kubernetes platform, 
+    where the cluster consists of a control plane managed by AWS and worker nodes running our applications.
+    
+    The worker nodes run multiple pods, which host our application containers. 
+    We used Deployments to manage application replicas and ensure high availability.
+    
+    For exposing applications, we used Services like ClusterIP along with Ingress controllers to manage external traffic routing.
+    
+    For monitoring, we deployed Prometheus and Grafana to collect and visualize metrics, 
+    and Loki with Promtail for centralized logging. Promtail runs as a DaemonSet on each node to collect logs.
+    
+    We also used Node Exporter and cAdvisor as DaemonSets to collect node-level and container-level metrics,
+    which are scraped by Prometheus.
+    
+    For storage, we configured the AWS EBS CSI driver to dynamically provision volumes, 
+    and we used IRSA (IAM Roles for Service Accounts) to securely grant permissions to pods.
+
+
+
 ### What are your strengths and weaknesses?
 
     ✅ Strengths (Simple & Strong):
