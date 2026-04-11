@@ -221,6 +221,40 @@ generated TLS secret,and NGINX used it for HTTPS.
     I verified the variable definitions in variables.tf, compared them with how they were used in the main configuration and tfvars files, 
     and found a naming mismatch. After correcting the variable reference, the validation passed and the pipeline executed successfully.---
 
-# 🔥 Final Tip
+## 13. Dockerfile (Java WAR)
 
-Start with short answer → Pause → Expand if asked
+```dockerfile
+
+FROM maven:3.9.6-eclipse-temurin-17 AS build
+WORKDIR /app
+COPY . .
+RUN mvn clean package
+
+FROM tomcat:9-jdk17
+COPY --from=build /app/target/*.war /usr/local/tomcat/webapps/app.war
+
+```
+### 14. DOcker compose file with 2 serivces with diffrent image
+    
+    version: '3'
+    services:
+      app:
+        image: myapp:latest
+        ports:
+          - "8080:8080"
+    
+      db:
+        image: mysql:5.7
+        environment:
+          MYSQL_ROOT_PASSWORD: root
+
+### 15. create user without useradd andadduser
+
+    echo "test:x:1001:1001::/home/test:/bin/bash" >> /etc/passwd
+
+###  16. copy with time stamp and chown onwership to a driectory recusively 
+
+    cp -p file1 file2  
+    chown -R user:group dir/
+
+###     
