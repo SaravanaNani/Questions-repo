@@ -243,4 +243,28 @@ How will you troubleshoot?
 20. How do you debug a memory leak?
 
 ---
-# DevOps Debugging Cheat Sheet (Focus Points)
+# DevOps Interview Questions (12)
+
+1. In your project on infrastructure automation with Terraform, can you explain how you structured your Terraform modules for VPC, EC2, security groups, and S3? What best practices did you follow to ensure consistency and ease of use?
+
+2. You mentioned improving deployment speed by 40% through the integration of Terraform and Ansible in Jenkins CI/CD pipelines. Can you describe the process you used to achieve this integration and how it impacted your deployment workflow?
+
+3. In your role supporting AWS EKS, how did you configure ingress and load balancer services? Can you explain the considerations you took into account for securing the traffic?
+
+4. Can you discuss the observability stack you deployed using Prometheus, Grafana, and Loki? How did you ensure that it met the requirements for metrics collection and centralized logging?
+
+5. You've worked with IAM roles and policies in AWS. Can you explain how you configured IAM roles for service accounts per se in your EKS environment and the advantages it provided?
+
+6. In your experience with CI/CD using Jenkins, how did you handle troubleshooting Terraform validation errors and Jenkins failures? Can you provide a specific example of a problem you faced and how you resolved it?
+
+7. Can you explain how you managed variable values when calling the modules for different environments? Specifically, how did you handle sensitive information such as IAM credentials or database passwords, and what strategies did you employ to ensure efficiency and compliance across multiple environments?
+
+8. Can you explain how you handled state management in Terraform when integrating it with Jenkins? Specifically, how did you ensure that the state files were managed correctly, and what strategies did you use to avoid potential issues like state file corruption or concurrency conflicts during simultaneous deployments?
+
+9. Can you explain how you implemented the NGINX Ingress Controller for handling SSL termination with Let's Encrypt? Specifically, what challenges did you encounter regarding certificate management and renewal, and how did you ensure high availability of the Ingress resources during these processes?
+
+10. Can you explain how you configured service discovery in Prometheus for your observability stack? Specifically, what mechanisms did you use to ensure that Prometheus dynamically discovers and scrapes the metrics from the various exporters and applications running in your Kubernetes cluster? Additionally, how did you handle any potential issues with scraping or metric availability?
+
+11. Can you explain the specific steps you took to define the IAM policy for the role associated with the Kubernetes service account? Additionally, how did you ensure that the least privilege principle was maintained in your IAM role configuration?
+
+12. Can you explain the process you followed to identify the incorrect variable reference in your Terraform configuration? Specifically, what steps did you take to verify the variable definition?
