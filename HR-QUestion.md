@@ -1,7 +1,7 @@
 # HR -  QUES
 ---
 
-### Caarer GAP
+### Career GAP
 
     After my previous organization went through restructuring, 
     I used the transition period to strengthen my practical expertise in cloud and DevOps engineering 
@@ -9,6 +9,11 @@
     I’m now looking for a stable long-term opportunity where I can contribute with both my previous production support experience 
     and the stronger technical depth I developed during this phase.
 
+### why not got offer yet
+
+    The hiring process timelines and requirements vary across companies, 
+    but I’ve been consistently improving my technical capabilities and staying actively engaged with opportunities.
+    I’m confident about finding the right long-term fit where I can contribute effectively.
 
 ### Self Introduction
 
