@@ -3,8 +3,11 @@
 
 ### Caarer GAP
 
-    After my previous organization went through restructuring, I used the transition period to strengthen my practical expertise in cloud and DevOps engineering through hands-on work in AWS, GCP, Kubernetes, Terraform, CI/CD automation, networking, and system troubleshooting. 
-    I’m now looking for a stable long-term opportunity where I can contribute with both my previous production support experience and the stronger technical depth I developed during this phase.
+    After my previous organization went through restructuring, 
+    I used the transition period to strengthen my practical expertise in cloud and DevOps engineering 
+    through hands-on work in AWS, GCP, Kubernetes, Terraform, CI/CD automation, networking, and system troubleshooting. 
+    I’m now looking for a stable long-term opportunity where I can contribute with both my previous production support experience 
+    and the stronger technical depth I developed during this phase.
 
 
 ### Self Introduction
