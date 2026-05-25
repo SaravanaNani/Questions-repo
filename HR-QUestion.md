@@ -79,7 +79,13 @@
     but now I am working on giving more structured and clear answers.
 
 ---
-
+### why need to I hire you?
+    
+    I have hands-on exposure in DevOps support environments involving Kubernetes, Terraform, Docker, CI/CD, and troubleshooting.
+    I’m comfortable learning quickly, handling production issues, and working across cloud and automation technologies.
+    I believe my practical troubleshooting mindset and willingness to take ownership would help me contribute effectively to the team
+    
+---
 ### What is one key thing you carry from your previous role?”
 
     One key thing I carry from my previous role is hands-on experience in infrastructure automation and deployment. 
