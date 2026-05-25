@@ -220,6 +220,7 @@
 
     Thank you for asking, sir.
 
+    
     My previous CTC was 3.4 LPA, and I have 1.9 years of hands-on experience in DevOps and Cloud technologies. 
     During this time, I have worked on tools and technologies like AWS, Docker, Kubernetes, Jenkins, Terraform, Ansible, and CI/CD automation.
     
