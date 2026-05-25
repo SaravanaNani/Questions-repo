@@ -226,7 +226,7 @@
     
     Considering my experience, technical exposure, and current market standards,
     I’m expecting somewhere around 6.5 to 7 LPA.
-    However, I’m definitely open to discussion based on the role, responsibilities, and growth opportunities within the organization.
+    However, I’m definitely open to discussion based on the role, responsibilities, and growth opportunities within the organization
 
 
 ### If he says “That’s too high”
@@ -237,19 +237,21 @@ Then calmly reply:
     However, I’m also looking for a good learning environment and long-term growth, 
     so I’m open to discussing a mutually suitable package.
 
+
 ==============================================================================================
 Secnario 2
 
-### what if they still stay in 5lpa:
+### if they say numbers they can offfer:
 
-    I understand, sir.
+    Thank you, sir. I really appreciate the offer and the opportunity.
     
-    However, considering my 1.8 years of hands-on experience in DevOps and Cloud technologies,
-    along with relocation and living expenses in Coimbatore, I was expecting something closer to 6 to 6.5 LPA.
+    However, considering my hands-on experience in DevOps technologies, relocation to Coimbatore, and overall living expenses away from home, 
+    I was expecting something closer to the 6 to 6.5 LPA range.
     
-    I’m genuinely interested in this opportunity and confident that 
-    I can contribute well to the team from the beginning.
-    So I wanted to check if there is any possibility to reconsider the package slightly closer to my expectation.
+    I’m genuinely interested in the role and the learning opportunity here, 
+    so I wanted to check if there is any flexibility in the compensation from your side.
+
+
 
 ### If they still hesitate, then say:
 
@@ -257,6 +259,8 @@ Secnario 2
     
     At the same time, since I’ll be relocating and managing expenses independently, 
     a package around 6 LPA would make things more manageable for me.
+
+
 
 # Devops - CEO TEC 
 
