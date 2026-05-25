@@ -198,7 +198,58 @@
 
 ---
 
+# SALARY Discussion:
 
+
+### ask there budget:
+
+    Considering my previous experience and current market standards for DevOps roles, I’m looking for a competitive package.
+    Before sharing a specific number, I would also like to understand the budget range planned for this role from your side.
+========================================================================================================================================
+
+### Scenario 1
+
+
+### IF HR pushes you take first about numbers:
+
+    Thank you for asking, sir.
+
+    My previous CTC was 3.4 LPA, and I have 1.9 years of hands-on experience in DevOps and Cloud technologies. 
+    During this time, I have worked on tools and technologies like AWS, Docker, Kubernetes, Jenkins, Terraform, Ansible, and CI/CD automation.
+    
+    Considering my experience, technical exposure, and current market standards,
+    I’m expecting somewhere around 6.5 to 7 LPA.
+    However, I’m definitely open to discussion based on the role, responsibilities, and growth opportunities within the organization.
+
+
+### If he says “That’s too high”
+
+Then calmly reply:
+
+    I completely understand, sir. My expectation is based on my hands-on experience and skill set. 
+    However, I’m also looking for a good learning environment and long-term growth, 
+    so I’m open to discussing a mutually suitable package.
+
+==============================================================================================
+Secnario 2
+
+### what if they still stay in 5lpa:
+
+    I understand, sir.
+    
+    However, considering my 1.8 years of hands-on experience in DevOps and Cloud technologies,
+    along with relocation and living expenses in Coimbatore, I was expecting something closer to 6 to 6.5 LPA.
+    
+    I’m genuinely interested in this opportunity and confident that 
+    I can contribute well to the team from the beginning.
+    So I wanted to check if there is any possibility to reconsider the package slightly closer to my expectation.
+
+### If they still hesitate, then say:
+
+    I’m flexible and open to discussion, sir. My main interest is good technical exposure and long-term growth.
+    
+    At the same time, since I’ll be relocating and managing expenses independently, 
+    a package around 6 LPA would make things more manageable for me.
 
 # Devops - CEO TEC 
 
