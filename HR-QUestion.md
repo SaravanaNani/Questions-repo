@@ -17,22 +17,23 @@
 
 ### Self Introduction
 
+Hi, thank you for the opportunity.
 
-    Hi, thank you for the opportunity.
-    Myself Saravana, and I have around 2 years of experience as a DevOps Engineer.
-    In my previous role at Rediffo Private Limited, I worked on both monolithic and microservices-based environments.
-    On the monolithic side, I was involved in AWS infrastructure provisioning using Terraform, 
-    where I created resources like EC2, VPC, and security groups.
-    I also built CI/CD pipelines for Java applications using Jenkins and 
-    created Docker-based Jenkins agents for consistent build environments. 
-    Additionally, I assisted in troubleshooting build and deployment issues.
-    On the microservices side, I worked with Kubernetes in EKS, where I helped in cluster setup, 
-    configured Ingress and TLS, and supported monitoring setup using Prometheus, Grafana, and Loki. 
-    I also worked on troubleshooting issues like CrashLoopBackOff and ImagePullBackOff in dev and QA environments.
-    I have also gained hands-on exposure to GCP, 
-    where I completed a multi-cloud project by deploying a Node.js application across AWS and GCP using Terraform and GitLab CI.
-    Currently, I am looking for an opportunity where I can further enhance my skills in DevOps, 
-    especially in microservices and cloud-native environments.
+    My name is Saravana, and I have around 1.8 years of experience as a DevOps Engineer.
+    
+    In my previous role at Adaequare Info Pvt Ltd, I worked on both monolithic and microservices-based environments.
+    
+    For monolithic applications, I worked on AWS infrastructure provisioning using Terraform,
+    where I created and managed resources such as EC2, VPC, Security Groups, and S3. 
+    I also built and maintained Jenkins CI/CD pipelines for Java applications, integrated Terraform and Ansible automation, 
+    and used Docker-based Jenkins agents for consistent build environments.
+    
+    For microservices-based applications, I worked with AWS EKS, Kubernetes, Helm, Ingress, TLS automation, and monitoring tools such as Prometheus, Grafana, and Loki. I was involved in Kubernetes troubleshooting, including issues like CrashLoopBackOff, ImagePullBackOff, pod health validation, and log analysis.
+    
+    Additionally, I have hands-on exposure to GCP, where I worked on a multi-cloud project deploying applications across AWS and GCP using Terraform and GitLab CI/CD.
+    
+    Currently, I am looking for an opportunity where I can further strengthen my skills in Kubernetes, cloud-native technologies, platform engineering, and DevOps automation while contributing to real-world production environments.
+
 
 ---
  ### multi cloud 
