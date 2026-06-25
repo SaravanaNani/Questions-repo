@@ -19,7 +19,10 @@
 
 Hi, thank you for the opportunity.
 
-    My name is Saravana, and I have around 1.8 years of experience as a DevOps Engineer.
+    My name is Saravana, and 
+
+    I'm a DevOps Engineer with around two years of experience specializing in AWS cloud infrastructure,
+    CI/CD automation, Docker, Kubernetes, and Infrastructure as Code using Terraform."
     
     In my previous role at Adaequare Info Pvt Ltd, I worked on both monolithic and microservices-based environments.
     
