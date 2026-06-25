@@ -28,11 +28,33 @@ Hi, thank you for the opportunity.
     I also built and maintained Jenkins CI/CD pipelines for Java applications, integrated Terraform and Ansible automation, 
     and used Docker-based Jenkins agents for consistent build environments.
     
-    For microservices-based applications, I worked with AWS EKS, Kubernetes, Helm, Ingress, TLS automation, and monitoring tools such as Prometheus, Grafana, and Loki. I was involved in Kubernetes troubleshooting, including issues like CrashLoopBackOff, ImagePullBackOff, pod health validation, and log analysis.
+    For microservices-based applications, I worked with AWS EKS, Ingress TLS automation, and monitoring tools such as Prometheus, Grafana, and Loki. 
+    I was involved in Kubernetes troubleshooting, including issues like CrashLoopBackOff, ImagePullBackOff, pod health validation, and log analysis.
     
-    Additionally, I have hands-on exposure to GCP, where I worked on a multi-cloud project deploying applications across AWS and GCP using Terraform and GitLab CI/CD.
+    Additionally, I have hands-on exposure to GCP, 
+    where I worked on a multi-cloud project deploying applications across AWS and GCP using Terraform and GitLab CI/CD.
     
-    Currently, I am looking for an opportunity where I can further strengthen my skills in Kubernetes, cloud-native technologies, platform engineering, and DevOps automation while contributing to real-world production environments.
+    Currently, I am looking for an opportunity where I can further strengthen my skills in Kubernetes, cloud-native technologies and 
+    DevOps automation while contributing to real-world production environments.
+
+---
+### Task Management project
+
+    I developed a Task Manager application using Flask with AWS RDS MySQL as the backend database. 
+    I containerized the application using Docker and created a Docker Compose setup for local development. 
+    For deployment, I hosted the application on an AWS EC2 instance and configured Nginx as a reverse proxy with HTTPS using Let's Encrypt SSL.
+    
+    I implemented a Jenkins CI/CD pipeline that automatically checks out the code from GitHub, 
+    performs Python syntax validation, builds a Docker image, 
+    scans it using Trivy for security vulnerabilities, 
+    deploys the application as a candidate release,
+    and performs a health check. 
+    If the health check passes, the image is promoted as the stable version.
+    If it fails, the pipeline automatically rolls back to the previous stable image. 
+    I also added image cleanup to reduce disk usage and configured build retention in Jenkins.
+    
+    For security, I created a Jenkins viewer role with read-only access and 
+    an AWS IAM read-only user for project review. Finally, I documented the complete setup in the README."
 
 
 ---
