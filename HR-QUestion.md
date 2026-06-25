@@ -91,6 +91,15 @@ Hi, thank you for the opportunity.
     and we used IRSA (IAM Roles for Service Accounts) to securely grant permissions to pods.
 
 ---
+
+    Whenever a developer pushes code to GitHub, a webhook automatically triggers the Jenkins pipeline.
+    Jenkins first checks out the latest source code and uses Maven to compile the application and execute unit test cases.
+    After a successful build, SonarQube performs static code analysis to identify code quality issues and vulnerabilities. 
+    Once the quality gate passes, Jenkins packages the application and uploads the artifact to Nexus, which acts as a centralized artifact repository
+    . After manual approval from the release team, Jenkins downloads the same artifact from Nexus and deploys it to the target EC2 server.
+    Finally, the application service is restarted and the deployment is verified."
+
+---
 ### What are your strengths and weaknesses?
 
     ✅ Strengths (Simple & Strong):
