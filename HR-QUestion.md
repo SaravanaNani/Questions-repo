@@ -3,11 +3,16 @@
 
 ### Career GAP
 
-    After my previous organization went through restructuring, 
-    I used the transition period to strengthen my practical expertise in cloud and DevOps engineering 
-    through hands-on work in AWS, GCP, Kubernetes, Terraform, CI/CD automation, networking, and system troubleshooting. 
-    I’m now looking for a stable long-term opportunity where I can contribute with both my previous production support experience 
-    and the stronger technical depth I developed during this phase.
+    My previous organization had limited opportunities to work on modern cloud and DevOps automation initiatives, 
+    as I was primarily involved in supporting existing projects. During a restructuring, the company initiated employee releases. 
+    After serving my one-month notice period, 
+    I mutually agreed with HR for an early release due to personal commitments that required my presence at home.
+
+    I used this transition period productively to strengthen my practical expertise by working on hands-on multi-cloud DevOps projects.
+    I enhanced my skills in AWS, GCP, Kubernetes, Terraform, Docker, Jenkins, CI/CD automation, infrastructure provisioning, networking, 
+    monitoring, and system troubleshooting. This phase significantly improved my technical depth,
+    and I am now looking for a long-term opportunity where I can apply both my industry experience and the practical skills I have developed.
+
 
 ### why not got offer yet
 
